@@ -1,11 +1,11 @@
-package javalabra.uno.sovelluslogiikka;
+package joululabra.uno.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.List;
-import javalabra.uno.domain.Kortti;
-import javalabra.uno.domain.Korttijoukko;
-import javalabra.uno.domain.Pakka;
-import javalabra.uno.domain.Pelaaja;
+import joululabra.uno.domain.Kortti;
+import joululabra.uno.domain.Korttijoukko;
+import joululabra.uno.domain.Pakka;
+import joululabra.uno.domain.Pelaaja;
 
 public class Peli {
 
@@ -67,9 +67,7 @@ public class Peli {
     }
 
     public void otaKorttiPakasta(Pelaaja pelaaja) throws Exception {
-        if (!pakka.onTyhja()) {
-            pakka.siirraEnsimmainenKortti(pelaaja.getKasi());
-        }
+        pakka.siirraEnsimmainenKortti(pelaaja.getKasi());
     }
 
     public boolean peliPaattynyt() {

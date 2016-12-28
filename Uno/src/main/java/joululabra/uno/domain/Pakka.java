@@ -1,4 +1,4 @@
-package javalabra.uno.domain;
+package joululabra.uno.domain;
 
 import java.util.Collections;
 

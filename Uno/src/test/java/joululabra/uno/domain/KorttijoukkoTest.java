@@ -1,4 +1,4 @@
-package javalabra.uno.domain;
+package joululabra.uno.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,7 @@ public class KorttijoukkoTest {
         assertTrue(korttijoukko.onTyhja());
         assertEquals(keltainen1, kohde.getKortit().get(0));
     }
-    
+
     @Test
     public void testGetKorttienMaara() {
         korttijoukko.lisaaKortti(punainen3);

@@ -1,6 +1,6 @@
-package javalabra.uno.sovelluslogiikka;
+package joululabra.uno.sovelluslogiikka;
 
-import javalabra.uno.domain.Kortti;
+import joululabra.uno.domain.Kortti;
 
 public class Saannot {
 

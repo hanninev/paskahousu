@@ -1,4 +1,4 @@
-package javalabra.uno.domain;
+package joululabra.uno.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +47,11 @@ public class KorttiTest {
         assertTrue(kortit.get(0) == punainen2);
         assertTrue(kortit.get(1) == keltainen2);
         assertTrue(kortit.get(2) == punainen5);
+    }
+
+    @Test
+    public void testEqualsJaHashCode() {
+        assertTrue(new Kortti(Kortti.PUNAINEN, 2).equals(new Kortti(Kortti.PUNAINEN, 2)));
     }
 
 }

@@ -1,10 +1,10 @@
-package javalabra.uno;
+package joululabra.uno;
 
 import java.util.Scanner;
-import javalabra.uno.domain.Kortti;
-import javalabra.uno.domain.Pelaaja;
-import javalabra.uno.sovelluslogiikka.Peli;
-import javalabra.uno.sovelluslogiikka.Saannot;
+import joululabra.uno.domain.Kortti;
+import joululabra.uno.domain.Pelaaja;
+import joululabra.uno.sovelluslogiikka.Peli;
+import joululabra.uno.sovelluslogiikka.Saannot;
 
 public class Paaohjelma {
 

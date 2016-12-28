@@ -1,4 +1,4 @@
-package javalabra.uno.domain;
+package joululabra.uno.domain;
 
 public class Kortti implements Comparable<Kortti> {
 

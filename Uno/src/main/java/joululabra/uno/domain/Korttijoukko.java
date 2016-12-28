@@ -1,4 +1,4 @@
-package javalabra.uno.domain;
+package joululabra.uno.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class Korttijoukko {
         }
         return kortit.get(kortit.size() - 1);
     }
-    
+
     public int getKorttienMaara() {
         return this.kortit.size();
     }
