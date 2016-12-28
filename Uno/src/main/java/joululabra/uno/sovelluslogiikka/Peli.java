@@ -2,20 +2,28 @@ package joululabra.uno.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.List;
+import joululabra.uno.domain.Korttijoukko;
+import joululabra.uno.domain.Pakka;
 import joululabra.uno.domain.Pelaaja;
 
 public class Peli {
 
-    private Siirtojenkasittelija siirtojenkasittelija;
+    private Pakka pakka;
+    private Korttijoukko pino;
     private List<Pelaaja> pelaajat;
 
     public Peli() {
-        siirtojenkasittelija = new Siirtojenkasittelija();
+        pakka = new Pakka();
+        pino = new Korttijoukko();
         pelaajat = new ArrayList<>();
     }
 
-    public Siirtojenkasittelija getS() {
-        return siirtojenkasittelija;
+    public Korttijoukko getPino() {
+        return pino;
+    }
+
+    public Pakka getPakka() {
+        return pakka;
     }
 
     public List<Pelaaja> getPelaajat() {
@@ -26,11 +34,19 @@ public class Peli {
         pelaajat.add(pelaaja);
     }
 
+    public void siirraPinostaPakkaan() throws Exception {
+        if (pakka.onTyhja()) {
+            for (int i = 0; i < pino.getKorttienMaara() - 1; i++) {
+                pino.siirraKortti(pino.getKortit().get(pino.getKortit().size() - 2), pakka);
+            }
+        }
+    }
+
     public void alusta() throws Exception {
-        siirtojenkasittelija.getPakka().sekoitaKortit();
+        pakka.sekoitaKortit();
         for (Pelaaja pelaaja : pelaajat) {
             for (int i = 0; i < 5; i++) {
-                siirtojenkasittelija.getPakka().siirraEnsimmainenKortti(pelaaja.getKasi());
+                pakka.siirraEnsimmainenKortti(pelaaja.getKasi());
             }
         }
     }
@@ -44,7 +60,6 @@ public class Peli {
         }
         aloittava.asetaVuoroon();
     }
-
 
     public boolean peliPaattynyt() {
         int pelaajatJoillaKortteja = 0;

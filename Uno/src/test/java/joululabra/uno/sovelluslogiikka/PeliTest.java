@@ -32,10 +32,10 @@ public class PeliTest {
     @Test
     public void kaikillaPelaajillaAlussaViisiKorttiaJaKortitSekoitettuEnnenJakoa() throws Exception {
         Pakka pakka = new Pakka();
-        assertFalse(pakka.getKortit().get(0) == peli.getS().getPakka().getKortit().get(0)
-                && pakka.getKortit().get(1) == peli.getS().getPakka().getKortit().get(1)
-                && pakka.getKortit().get(2) == peli.getS().getPakka().getKortit().get(2)
-                && pakka.getKortit().get(3) == peli.getS().getPakka().getKortit().get(3));
+        assertFalse(pakka.getKortit().get(0) == peli.getPakka().getKortit().get(0)
+                && pakka.getKortit().get(1) == peli.getPakka().getKortit().get(1)
+                && pakka.getKortit().get(2) == peli.getPakka().getKortit().get(2)
+                && pakka.getKortit().get(3) == peli.getPakka().getKortit().get(3));
 
         for (Pelaaja pelaaja : peli.getPelaajat()) {
             assertEquals(pelaaja.getKasi().getKorttienMaara(), 5);
@@ -60,35 +60,35 @@ public class PeliTest {
         assertTrue(peli.getPelaajat().size() == pelaajienMaara + 1);
     }
 
-    @Test
+   /* @Test
     public void korttiSiirretaanJosSiirtoLaillinen() throws Exception {
         Kortti kortti = pelaaja1.getKasi().getKortit().get(0);
-        peli.getS().teeSiirto(pelaaja1, kortti);
-        assertEquals(peli.getS().getPino().viimeisinKortti(), kortti);
+        pelaaja1.teeSiirto(kortti, peli.getPino());
+        assertEquals(peli.getPino().viimeisinKortti(), kortti);
     }
 
-    @Test
+     @Test
     public void pelaajanKortitLisaantyyKunOtetaanKorttejaPakasta() throws Exception {
         assertEquals(pelaaja1.getKasi().getKorttienMaara(), 5);
-        peli.getS().otaKorttejaPakasta(pelaaja1, 3);
+        pelaaja1.nostaKorttejaPakasta(peli.getPakka(), 3);
         assertEquals(pelaaja1.getKasi().getKorttienMaara(), 8);
-    }
+    } 
 
     @Test
     public void pelaajaSaaPakastaOttamansaKortin() throws Exception {
-        Kortti kortti = peli.getS().getPakka().viimeisinKortti();
-        peli.getS().otaKorttiPakasta(pelaaja1);
+        Kortti kortti = peli.getPakka().viimeisinKortti();
+        pelaaja1.nostaPakasta(peli.getPakka());
         assertEquals(pelaaja1.getKasi().viimeisinKortti(), kortti);
         assertEquals(pelaaja1.getKasi().getKorttienMaara(), 6);
     }
-
+*/
     @Test
     public void josVainYhdellaOnKorttejaPeliOnPaattynyt() throws Exception {
         for (int i = 0; i < peli.getPelaajat().size() - 1; i++) {
             Pelaaja lopettava = peli.getPelaajat().get(i);
 
             while (lopettava.getKasi().getKorttienMaara() > 0) {
-                peli.getS().siirraPinostaPakkaan();
+                peli.siirraPinostaPakkaan();
 
                 assertFalse(peli.peliPaattynyt());
 
@@ -99,12 +99,12 @@ public class PeliTest {
 
                 for (Kortti kortti : kortitKadessa) {
                     if (lopettava.getKasi().getKorttienMaara() > 0) {
-                        peli.getS().teeSiirto(lopettava, kortti);
+                        lopettava.teeSiirto(kortti, peli.getPino());
                     }
                 }
 
                 if (kortteja == lopettava.getKasi().getKorttienMaara()) {
-                    peli.getS().otaKorttiPakasta(lopettava);
+                    lopettava.nostaPakasta(peli.getPakka());
                 }
             }
 

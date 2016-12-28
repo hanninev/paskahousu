@@ -1,6 +1,7 @@
 package joululabra.uno.sovelluslogiikka;
 
 import joululabra.uno.domain.Kortti;
+import joululabra.uno.domain.Pelaaja;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -41,8 +42,12 @@ public class SaannotTest {
 
     @Test
     public void testJoutuuNostamaanPinon() {
-        assertFalse(Saannot.joutuuNostamaanPinon(3));
-        assertTrue(Saannot.joutuuNostamaanPinon(4));
+        Pelaaja pelaaja = new Pelaaja();
+        pelaaja.asetaVuoroon();
+        pelaaja.getVuoro().lisaaNostokerta();
+        pelaaja.getVuoro().lisaaNostokerta();
+        pelaaja.getVuoro().lisaaNostokerta();
+        assertTrue(Saannot.joutuuNostamaanPinon(pelaaja));
     }
 
 }

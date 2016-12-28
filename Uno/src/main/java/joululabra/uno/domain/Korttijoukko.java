@@ -19,12 +19,13 @@ public class Korttijoukko {
         kortit.add(kortti);
     }
 
-    public void siirraKortti(Kortti kortti, Korttijoukko kohde) throws Exception {
+    public boolean siirraKortti(Kortti kortti, Korttijoukko kohde) throws Exception {
         if (kortit.contains(kortti)) {
             kortit.remove(kortti);
             kohde.lisaaKortti(kortti);
+            return true;
         } else {
-            throw new Exception("Siirrettävää korttia ei löytynyt tästä korttijoukosta.");
+            return false;
         }
     }
 

@@ -52,11 +52,18 @@ public class Saannot {
         return arvo;
     }
 
-    public static boolean joutuuNostamaanPinon(Integer nostokerrat) {
-        if (nostokerrat > 3) {
+    public static boolean joutuuNostamaanPinon(Pelaaja pelaaja) {
+        if (pelaaja.getVuoro().getNostokerrat() >= 3) {
             return true;
         }
         return false;
+    }
+
+    public static boolean saaJatkaa(Pelaaja pelaaja) {
+        if (pelaaja.getVuoro().getNostokerrat() > 3) {
+            return false;
+        }
+        return true;
     }
 
 }

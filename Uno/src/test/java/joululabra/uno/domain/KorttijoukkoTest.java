@@ -42,16 +42,7 @@ public class KorttijoukkoTest {
         korttijoukko.siirraKortti(keltainen1, kohde);
         assertTrue(korttijoukko.getKortit().isEmpty());
         assertEquals(keltainen1, kohde.getKortit().get(0));
-
-        boolean thrown = false;
-
-        try {
-            korttijoukko.siirraKortti(punainen3, kohde);
-        } catch (Exception e) {
-            thrown = true;
-        }
-
-        assertTrue(thrown);
+        assertFalse(korttijoukko.siirraKortti(punainen3, kohde));
     }
 
     @Test
