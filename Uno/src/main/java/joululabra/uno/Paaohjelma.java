@@ -9,45 +9,49 @@ import joululabra.uno.sovelluslogiikka.Saannot;
 public class Paaohjelma {
 
     public static void main(String[] args) throws Exception {
-        // tällä voi testata toiminnallisuutta
+        // väliaikainen käyttöliittymä, jolla voi testata toiminnallisuutta
 
         Scanner lukija = new Scanner(System.in);
         Peli peli = new Peli();
-        
+
         Pelaaja ville = new Pelaaja();
         ville.setNimi("Ville");
         peli.lisaaPelaaja(ville);
-        
+
         Pelaaja janne = new Pelaaja();
         janne.setNimi("Janne");
         peli.lisaaPelaaja(janne);
-        
+
         peli.alusta();
         peli.kukaAloittaa();
         while (!peli.peliPaattynyt()) {
             for (Pelaaja pelaaja : peli.getPelaajat()) {
                 while (pelaaja.onVuorossa()) {
-                    System.out.println("Pakkaa jäljellä: " + peli.getPakka().getKorttienMaara());
-                    System.out.println("Pinon ylin:" + peli.getPino().viimeisinKortti());
+                    peli.getS().siirraPinostaPakkaan();
+                    System.out.println("Pakkaa jäljellä: " + peli.getS().getPakka().getKorttienMaara());
+                    System.out.println("Pinon ylin:" + peli.getS().getPino().viimeisinKortti());
                     System.out.println("Kädessäsi olevat: " + pelaaja.getKasi().getKortit());
-                    System.out.println(pelaaja.getNimi() + ", valitse kortti. Jos ei käy, kirjoita 0 ja 0");
+
+                    System.out.println(pelaaja.getNimi() + ", valitse kortti. Jos ei käy, nosta pakasta 0, nosta pino 20");
                     int vari = Integer.parseInt(lukija.nextLine());
                     int arvo = Integer.parseInt(lukija.nextLine());
-                    if (vari == 0 && arvo == 0) {
-                        peli.otaKorttiPakasta(pelaaja);
+                    if (vari == 0) {
+                        peli.getS().otaKorttiPakasta(pelaaja);
+                    } else if (vari == 20) {
+                        peli.getS().nostaPino(pelaaja);
                     } else {
-                        peli.teeSiirto(pelaaja, new Kortti(vari, arvo));
+                        peli.getS().teeSiirto(pelaaja, new Kortti(vari, arvo));
                     }
-                /*    if (Saannot.vastustajaNostaaKaksi(peli.getPino().viimeisinKortti())) {
-                        for (Pelaaja p : peli.getPelaajat()) {
-                            if (!p.onVuorossa()) {
-                                peli.otaKorttejaPakasta(pelaaja, 2);
-                            }
-                        }
+
+                    if (Saannot.seuraavaNostaaKaksi(peli.getS().getPino().viimeisinKortti())) {
+                        peli.getS().otaKorttejaPakasta(peli.getSeuraavaPelaaja(), 2);
                     }
-                    if (!Saannot.vuoroJatkuu(peli.getPino().viimeisinKortti())) {
+
+                    if (Saannot.seuraavaJaaValista(peli.getS().getPino().viimeisinKortti())) {
                         peli.seuraavanVuoro();
-                    } */
+                    }
+
+                    peli.seuraavanVuoro();
                 }
             }
         }

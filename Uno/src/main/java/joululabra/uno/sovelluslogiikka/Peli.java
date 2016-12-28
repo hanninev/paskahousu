@@ -2,33 +2,24 @@ package joululabra.uno.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.List;
-import joululabra.uno.domain.Kortti;
-import joululabra.uno.domain.Korttijoukko;
-import joululabra.uno.domain.Pakka;
 import joululabra.uno.domain.Pelaaja;
 
 public class Peli {
 
-    private Pakka pakka;
-    private Korttijoukko pino;
+    private Siirtojenkasittelija siirtojenkasittelija;
     private List<Pelaaja> pelaajat;
 
     public Peli() {
-        pakka = new Pakka();
-        pino = new Korttijoukko();
+        siirtojenkasittelija = new Siirtojenkasittelija();
         pelaajat = new ArrayList<>();
+    }
+
+    public Siirtojenkasittelija getS() {
+        return siirtojenkasittelija;
     }
 
     public List<Pelaaja> getPelaajat() {
         return pelaajat;
-    }
-
-    public Korttijoukko getPino() {
-        return pino;
-    }
-
-    public Pakka getPakka() {
-        return pakka;
     }
 
     public void lisaaPelaaja(Pelaaja pelaaja) {
@@ -36,10 +27,10 @@ public class Peli {
     }
 
     public void alusta() throws Exception {
-        pakka.sekoitaKortit();
+        siirtojenkasittelija.getPakka().sekoitaKortit();
         for (Pelaaja pelaaja : pelaajat) {
             for (int i = 0; i < 5; i++) {
-                pakka.siirraEnsimmainenKortti(pelaaja.getKasi());
+                siirtojenkasittelija.getPakka().siirraEnsimmainenKortti(pelaaja.getKasi());
             }
         }
     }
@@ -54,29 +45,28 @@ public class Peli {
         aloittava.asetaVuoroon();
     }
 
-    public void teeSiirto(Pelaaja pelaaja, Kortti kortti) throws Exception {
-        if (Saannot.siirtoOnLaillinen(pino.viimeisinKortti(), kortti)) {
-            pelaaja.getKasi().siirraKortti(kortti, pino);
-        }
-    }
-
-    public void otaKorttejaPakasta(Pelaaja pelaaja, Integer maara) throws Exception {
-        for (int i = 0; i < maara; i++) {
-            otaKorttiPakasta(pelaaja);
-        }
-    }
-
-    public void otaKorttiPakasta(Pelaaja pelaaja) throws Exception {
-        pakka.siirraEnsimmainenKortti(pelaaja.getKasi());
-    }
 
     public boolean peliPaattynyt() {
+        int pelaajatJoillaKortteja = 0;
         for (Pelaaja pelaaja : pelaajat) {
-            if (pelaaja.getKasi().getKorttienMaara() == 0) {
-                return true;
+            if (!pelaaja.getKasi().onTyhja()) {
+                pelaajatJoillaKortteja++;
             }
         }
-        return false;
+        return (pelaajatJoillaKortteja == 1);
+    }
+
+    public Pelaaja getSeuraavaPelaaja() {
+        for (int i = 0; i < pelaajat.size(); i++) {
+            if (pelaajat.get(i).onVuorossa()) {
+                if (i == pelaajat.size() - 1) {
+                    return pelaajat.get(0);
+                } else {
+                    return pelaajat.get(i + 1);
+                }
+            }
+        }
+        return null;
     }
 
     public void seuraavanVuoro() {

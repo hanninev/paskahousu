@@ -1,6 +1,7 @@
 package joululabra.uno.sovelluslogiikka;
 
 import joululabra.uno.domain.Kortti;
+import joululabra.uno.domain.Pelaaja;
 
 public class Saannot {
 
@@ -20,6 +21,10 @@ public class Saannot {
     }
 
     public static boolean seuraavaNostaaKaksi(Kortti pinonYlin) {
+        if (pinonYlin == null) {
+            return false;
+        }
+
         if (pinonYlin.getArvo() == Kortti.PLUSKAKSI) {
             return true;
         }
@@ -27,10 +32,24 @@ public class Saannot {
     }
 
     public static boolean seuraavaJaaValista(Kortti pinonYlin) {
+        if (pinonYlin == null) {
+            return false;
+        }
+
         if (pinonYlin.getArvo() == Kortti.UUDESTAAN || pinonYlin.getArvo() == Kortti.PLUSKAKSI) {
             return true;
         }
         return false;
+    }
+
+    public static boolean kadessaSopiviaKortteja(Pelaaja pelaaja, Kortti pinonYlin) {
+        boolean arvo = false;
+        for (Kortti kortti : pelaaja.getKasi().getKortit()) {
+            if (siirtoOnLaillinen(pinonYlin, kortti)) {
+                arvo = true;
+            }
+        }
+        return arvo;
     }
 
     public static boolean joutuuNostamaanPinon(Integer nostokerrat) {
