@@ -1,5 +1,6 @@
-package joululabra.uno.domain;
+package joululabra.paskahousu.domain;
 
+import joululabra.paskahousu.domain.Pakka;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -15,7 +16,7 @@ public class PakkaTest {
 
     @Test
     public void uudessaPakassaOnOikeaMaaraKortteja() {
-        assertEquals(pakka.getKorttienMaara(), 44);
+        assertEquals(pakka.korttienMaara(), 52);
     }
 
     @Test

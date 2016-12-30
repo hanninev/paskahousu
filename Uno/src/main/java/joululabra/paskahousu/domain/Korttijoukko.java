@@ -1,4 +1,4 @@
-package joululabra.uno.domain;
+package joululabra.paskahousu.domain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +19,12 @@ public class Korttijoukko {
         kortit.add(kortti);
     }
 
-    public boolean siirraKortti(Kortti kortti, Korttijoukko kohde) throws Exception {
+    public Kortti otaKortti(Kortti kortti) throws Exception {
         if (kortit.contains(kortti)) {
             kortit.remove(kortti);
-            kohde.lisaaKortti(kortti);
-            return true;
-        } else {
-            return false;
+            return kortti;
         }
+        throw new Exception("Korttia ei löytynyt tästä korttijoukosta");
     }
 
     public boolean onTyhja() {
@@ -44,7 +42,7 @@ public class Korttijoukko {
         return kortit.get(kortit.size() - 1);
     }
 
-    public int getKorttienMaara() {
+    public int korttienMaara() {
         return this.kortit.size();
     }
 

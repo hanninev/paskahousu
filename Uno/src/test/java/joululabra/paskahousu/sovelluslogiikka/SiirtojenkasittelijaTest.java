@@ -1,4 +1,4 @@
-package joululabra.uno.sovelluslogiikka;
+package joululabra.paskahousu.sovelluslogiikka;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

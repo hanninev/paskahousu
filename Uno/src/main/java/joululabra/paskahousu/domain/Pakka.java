@@ -1,4 +1,4 @@
-package joululabra.uno.domain;
+package joululabra.paskahousu.domain;
 
 import java.util.Collections;
 
@@ -9,8 +9,8 @@ public class Pakka extends Korttijoukko {
     }
 
     private void luoKortit() {
-        for (int i = 0; i < Kortti.VARIT.length; i++) {
-            for (int j = 1; j < Kortti.ARVOT.length; j++) {
+        for (int i = 0; i < Kortti.MAAT.length; i++) {
+            for (int j = 2; j < Kortti.ARVOT.length; j++) {
                 lisaaKortti(new Kortti(i, j));
             }
         }
@@ -20,7 +20,7 @@ public class Pakka extends Korttijoukko {
         Collections.shuffle(kortit);
     }
 
-    public void siirraEnsimmainenKortti(Korttijoukko mihin) throws Exception {
-        siirraKortti(this.viimeisinKortti(), mihin);
+    public Kortti otaEnsimmainenKortti() throws Exception {
+        return otaKortti(this.viimeisinKortti());
     }
 }
