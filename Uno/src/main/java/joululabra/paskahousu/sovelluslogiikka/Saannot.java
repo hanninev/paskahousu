@@ -51,7 +51,7 @@ public class Saannot {
         }
     }
 
-    private static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) {
+    public static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) {
         if (kortti.getArvo() == 2) {
             return true;
         }
@@ -59,7 +59,7 @@ public class Saannot {
         if (pino.onTyhja()) {
             if (pakka.onTyhja()) {
                 return true;
-            } else if (kortti.getArvo() < 11) {
+            } else if (kortti.getArvo() < 11 || kortti.getArvo() == 14) {
                 return true;
             }
         } else {
@@ -70,7 +70,7 @@ public class Saannot {
         return false;
     }
 
-    private static boolean samaArvo(Vuoro vuoro, Kortti kortti) {
+    public static boolean samaArvo(Vuoro vuoro, Kortti kortti) {
         return (vuoro.getLaitettuPinoon().getKortit().get(0).getArvo() == kortti.getArvo());
     }
 

@@ -23,6 +23,7 @@ public class SaannotTest {
         pino = new Korttijoukko();
         vuoro = new Vuoro();
         pelaaja = new Pelaaja();
+        vuoro.setPelaaja(pelaaja);
     }
 
     @Test
@@ -32,15 +33,16 @@ public class SaannotTest {
         pino.otaKortti(new Kortti(Kortti.HERTTA, 10));
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 14));
         assertTrue(Saannot.joutuuAinaNostamaanPinon(pino));
+        pino.otaKortti(new Kortti(Kortti.HERTTA, 14));
+        pino.lisaaKortti(new Kortti(Kortti.PATA, 3));
+        pino.lisaaKortti(new Kortti(Kortti.HERTTA, 10));
+        assertFalse(Saannot.joutuuAinaNostamaanPinon(pino));
     }
 
     @Test
-    public void testSaaKokeillaOnnea() {
+    public void testSaaKokeillaOnnea() throws Exception {
         assertTrue(Saannot.saaKokeillaOnnea(vuoro));
-        vuoro.lisaaNostettuihinKortteihin(new Kortti(Kortti.HERTTA, 3));
-        assertFalse(Saannot.saaKokeillaOnnea(vuoro));
-        vuoro = new Vuoro();
-        vuoro.lisaaPinoonLaitettuihin(new Kortti(Kortti.PATA, 6));
+        vuoro.lisaaKateen(new Kortti(Kortti.HERTTA, 3));
         assertFalse(Saannot.saaKokeillaOnnea(vuoro));
     }
 
@@ -63,27 +65,56 @@ public class SaannotTest {
     }
 
     @Test
-    public void testPinoKaatuu() {
+    public void testPinoKaatuu() throws Exception {
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 3));
-        vuoro.lisaaPinoonLaitettuihin(new Kortti(Kortti.HERTTA, 10));
+        pelaaja.lisaaKorttiKateen(new Kortti(Kortti.HERTTA, 10));
+        vuoro.otaKadesta(new Kortti(Kortti.HERTTA, 10));
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 10));
         assertTrue(Saannot.pinoKaatuu(pino, vuoro));
+        assertTrue(pino.korttienMaara() > 1);
 
         pino = new Korttijoukko();
         vuoro = new Vuoro();
+        pelaaja = new Pelaaja();
+        vuoro.setPelaaja(pelaaja);
 
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 3));
-        vuoro.lisaaPinoonLaitettuihin(new Kortti(Kortti.HERTTA, 14));
+        pelaaja.lisaaKorttiKateen(new Kortti(Kortti.HERTTA, 14));
+        vuoro.otaKadesta(new Kortti(Kortti.HERTTA, 14));
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 14));
         assertTrue(Saannot.pinoKaatuu(pino, vuoro));
+        assertTrue(pino.korttienMaara() > 1);
     }
 
     @Test
     public void testKorttiSopii() {
         vuoro.setPelaaja(pelaaja);
-        
+
         pino.lisaaKortti(new Kortti(Kortti.HERTTA, 4));
         assertTrue(Saannot.korttiSopii(pino, pakka, vuoro, new Kortti(Kortti.PATA, 5)));
+        pino.lisaaKortti(new Kortti(Kortti.PATA, 4));
+        assertTrue(Saannot.korttiSopii(pino, pakka, vuoro, new Kortti(Kortti.PATA, 5)));
+    }
+
+    @Test
+    public void testVuoronEnsimmainenSiirtoOk() {
+        assertTrue(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 2)));
+        assertTrue(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 10)));
+        assertFalse(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 11)));
+        assertTrue(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 14)));
+        pino.lisaaKortti(new Kortti(Kortti.HERTTA, 4));
+        assertTrue(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 5)));
+        assertFalse(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 3)));
+        pino.lisaaKortti(new Kortti(Kortti.HERTTA, 2));
+        assertFalse(Saannot.vuoronEnsimmainenSiirtoOk(pakka, pino, new Kortti(Kortti.HERTTA, 3)));
+    }
+
+    @Test
+    public void testSamaArvo() {
+        pino.lisaaKortti(new Kortti(Kortti.HERTTA, 4));
+        vuoro.getLaitettuPinoon().lisaaKortti(new Kortti(Kortti.HERTTA, 4));
+        assertTrue(Saannot.samaArvo(vuoro, new Kortti(Kortti.PATA, 4)));
+        assertFalse(Saannot.samaArvo(vuoro, new Kortti(Kortti.HERTTA, 5)));
     }
 
 }

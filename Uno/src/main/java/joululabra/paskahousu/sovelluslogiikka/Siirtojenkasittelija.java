@@ -9,9 +9,8 @@ public class Siirtojenkasittelija {
 
     public void siirraKorttiPinoon(Kortti kortti, Pakka pakka, Korttijoukko kaatuneet, Korttijoukko pino, Vuoro vuoro) throws Exception {
         if (Saannot.korttiSopii(pino, pakka, vuoro, kortti)) {
-            Kortti siirrettava = vuoro.getPelaaja().otaKorttiKadesta(kortti);
+            Kortti siirrettava = vuoro.otaKadesta(kortti);
             pino.lisaaKortti(siirrettava);
-            vuoro.lisaaPinoonLaitettuihin(siirrettava);
             pinoKaatuu(kaatuneet, pino, vuoro);
         }
     }
@@ -19,15 +18,14 @@ public class Siirtojenkasittelija {
     public void taydennaKasi(Pakka pakka, Vuoro vuoro) throws Exception {
         if (Saannot.kadessaLiianVahanKortteja(vuoro, pakka)) {
             Kortti siirrettava = pakka.otaEnsimmainenKortti();
-            vuoro.getPelaaja().lisaaKorttiKateen(siirrettava);
+            vuoro.lisaaKateen(siirrettava);
         }
     }
 
     public void kokeileOnnea(Pakka pakka, Korttijoukko pino, Korttijoukko kaatuneet, Vuoro vuoro) throws Exception {
         if (Saannot.saaKokeillaOnnea(vuoro)) {
             Kortti kortti = pakka.otaEnsimmainenKortti();
-            vuoro.getPelaaja().lisaaKorttiKateen(kortti);
-            vuoro.lisaaNostettuihinKortteihin(kortti);
+            vuoro.lisaaKateen(kortti);
             if (Saannot.korttiSopii(pino, pakka, vuoro, kortti)) {
                 siirraKorttiPinoon(kortti, pakka, kaatuneet, pino, vuoro);
             } else {
@@ -40,15 +38,14 @@ public class Siirtojenkasittelija {
     public void nostaPino(Korttijoukko pino, Vuoro vuoro) throws Exception {
         while (!pino.onTyhja()) {
             Kortti kortti = pino.otaKortti(pino.getKortit().get(0));
-            vuoro.getPelaaja().lisaaKorttiKateen(kortti);
-            vuoro.lisaaNostettuihinKortteihin(kortti);
+            vuoro.lisaaKateen(kortti);
         }
         vuoro.setJatkuu(false);
     }
 
     public void pinoKaatuu(Korttijoukko kaatuneet, Korttijoukko pino, Vuoro vuoro) throws Exception {
         if (Saannot.pinoKaatuu(pino, vuoro)) {
-            for (int i = 0; i < pino.getKortit().size(); i++) {
+            while (!pino.onTyhja()) {
                 Kortti kortti = pino.otaKortti(pino.getKortit().get(0));
                 kaatuneet.lisaaKortti(kortti);
             }

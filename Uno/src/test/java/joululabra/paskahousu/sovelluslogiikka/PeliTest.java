@@ -28,7 +28,7 @@ public class PeliTest {
     }
 
     @Test
-    public void kaikillaPelaajillaAlussaViisiKorttiaJaKortitSekoitettuEnnenJakoa() throws Exception {
+    public void testKaikillaPelaajillaAlussaViisiKorttiaJaKortitSekoitettuEnnenJakoa() throws Exception {
         Pakka pakka = new Pakka();
         assertFalse(pakka.getKortit().get(0) == peli.getPakka().getKortit().get(0)
                 && pakka.getKortit().get(1) == peli.getPakka().getKortit().get(1)
@@ -41,10 +41,22 @@ public class PeliTest {
     }
 
     @Test
-    public void lisaaPelaajaToimii() {
+    public void testLisaaPelaajaToimii() {
         int pelaajienMaara = peli.getPelaajat().size();
         peli.lisaaPelaaja(new Pelaaja());
         assertTrue(peli.getPelaajat().size() == pelaajienMaara + 1);
     }
 
+    @Test
+    public void testPeliJatkuu() throws Exception {
+        while (!pelaaja1.getKasi().onTyhja()) {
+            pelaaja1.otaKorttiKadesta(pelaaja1.pieninKortti());
+        }
+        assertTrue(peli.peliJatkuu());
+        
+        while (!pelaaja2.getKasi().onTyhja()) {
+            pelaaja2.otaKorttiKadesta(pelaaja2.pieninKortti());
+        }
+        assertFalse(peli.peliJatkuu());
+    }
 }

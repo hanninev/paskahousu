@@ -76,13 +76,6 @@ public class Peli {
         return vuoro;
     }
 
-    public Vuoro edellinenVuoro() {
-        if (this.vuorot.size() > 1) {
-            return this.vuorot.get(vuorot.size() - 2);
-        }
-        return null;
-    }
-
     public boolean peliJatkuu() {
         int pelissaMukana = 0;
         for (Pelaaja pelaaja : pelaajat) {

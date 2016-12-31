@@ -1,28 +1,24 @@
 package joululabra.paskahousu.domain;
 
-import java.util.List;
-
 public class Vuoro {
 
     private Integer id;
     private Pelaaja pelaaja;
     private Korttijoukko nostetutKortit;
-    private Korttijoukko laitettuPinoon;
+    private Korttijoukko otettuKadesta;
     private boolean jatkuu;
 
     public Vuoro() {
         this.id = null;
         this.pelaaja = null;
         this.nostetutKortit = new Korttijoukko();
-        this.laitettuPinoon = new Korttijoukko();
+        this.otettuKadesta = new Korttijoukko();
         this.jatkuu = true;
     }
 
     public void nollaa() {
-        this.id = null;
-        this.pelaaja = null;
         this.nostetutKortit = new Korttijoukko();
-        this.laitettuPinoon = new Korttijoukko();
+        this.otettuKadesta = new Korttijoukko();
         this.jatkuu = true;
     }
 
@@ -46,16 +42,18 @@ public class Vuoro {
         return nostetutKortit;
     }
 
-    public void lisaaNostettuihinKortteihin(Kortti kortti) {
+    public void lisaaKateen(Kortti kortti) {
         this.nostetutKortit.lisaaKortti(kortti);
+        this.pelaaja.lisaaKorttiKateen(kortti);
     }
 
     public Korttijoukko getLaitettuPinoon() {
-        return laitettuPinoon;
+        return otettuKadesta;
     }
 
-    public void lisaaPinoonLaitettuihin(Kortti kortti) {
-        this.laitettuPinoon.lisaaKortti(kortti);
+    public Kortti otaKadesta(Kortti kortti) throws Exception {
+        this.otettuKadesta.lisaaKortti(kortti);
+        return this.pelaaja.otaKorttiKadesta(kortti);
     }
 
     public boolean jatkuu() {
