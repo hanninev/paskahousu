@@ -17,6 +17,5 @@ Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain
 * Kaikkien korttien nostaminen pinosta
 * Kädessä olevien korttien tarkastelu
 
-**Luokkakaavio**
-
+## Luokkakaavio
 ![Luokkakaavio](/dokumentaatio/luokkakaavio.png)
