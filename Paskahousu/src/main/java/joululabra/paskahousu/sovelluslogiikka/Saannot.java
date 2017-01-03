@@ -8,43 +8,27 @@ import joululabra.paskahousu.domain.Vuoro;
 public class Saannot {
 
     public static boolean joutuuAinaNostamaanPinon(Korttijoukko pino) {
-        if ((pino.korttienMaara() == 1)
+        return ((pino.korttienMaara() == 1)
                 && ((pino.viimeisinKortti().getArvo() == 10)
-                || (pino.viimeisinKortti().getArvo() == 14))) {
-            return true;
-        }
-        return false;
+                || (pino.viimeisinKortti().getArvo() == 14)));
     }
 
     public static boolean saaKokeillaOnnea(Vuoro vuoro) {
-        if ((vuoro.getNostetutKortit().korttienMaara() == 0) && (vuoro.getLaitettuPinoon().korttienMaara() == 0)) {
-            return true;
-        }
-        return false;
+        return ((vuoro.getNostetut().onTyhja()) && (vuoro.getLaitetut().onTyhja()));
     }
 
     public static boolean kadessaLiianVahanKortteja(Vuoro vuoro, Pakka pakka) {
-        if (vuoro == null) {
-            return false;
-        }
-
-        if ((!pakka.onTyhja()) && (vuoro.getPelaaja().getKasi().korttienMaara() < 5)) {
-            return true;
-        }
-        return false;
+        return ((!pakka.onTyhja()) && (vuoro.getPelaaja().getKasi().korttienMaara() < 5));
     }
 
     public static boolean pinoKaatuu(Korttijoukko pino, Vuoro vuoro) {
-        if ((pino.korttienMaara() > 1)
-                && ((vuoro.getLaitettuPinoon().viimeisinKortti().getArvo() == 10)
-                || (vuoro.getLaitettuPinoon().viimeisinKortti().getArvo() == 14))) {
-            return true;
-        }
-        return false;
+        return ((pino.korttienMaara() > 1)
+                && ((pino.viimeisinKortti().getArvo() == 10)
+                || (pino.viimeisinKortti().getArvo() == 14)));
     }
 
     public static boolean korttiSopii(Korttijoukko pino, Pakka pakka, Vuoro vuoro, Kortti kortti) {
-        if (vuoro.getLaitettuPinoon().onTyhja()) {
+        if (vuoro.getLaitetut().onTyhja()) {
             return vuoronEnsimmainenSiirtoOk(pakka, pino, kortti);
         } else {
             return samaArvo(vuoro, kortti);
@@ -71,7 +55,7 @@ public class Saannot {
     }
 
     public static boolean samaArvo(Vuoro vuoro, Kortti kortti) {
-        return (vuoro.getLaitettuPinoon().getKortit().get(0).getArvo() == kortti.getArvo());
+        return (vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo());
     }
 
 }

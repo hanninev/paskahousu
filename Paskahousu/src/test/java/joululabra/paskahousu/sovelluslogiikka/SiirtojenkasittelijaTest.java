@@ -1,56 +1,58 @@
 package joululabra.paskahousu.sovelluslogiikka;
 
 import joululabra.paskahousu.domain.Kortti;
-import joululabra.paskahousu.domain.Korttijoukko;
-import joululabra.paskahousu.domain.Pelaaja;
-import joululabra.paskahousu.domain.Vuoro;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
 public class SiirtojenkasittelijaTest {
 
-    Vuoro vuoro;
     Peli peli;
-    Pelaaja pelaaja;
-    Siirtojenkasittelija sk;
 
     @Before
     public void setUp() throws Exception {
         peli = new Peli();
-        pelaaja = new Pelaaja();
-        peli.lisaaPelaaja(pelaaja);
-        vuoro = peli.lisaaVuoro(pelaaja);
-        peli.alusta();
-        sk = new Siirtojenkasittelija();
+        peli.lisaaPelaaja("Pelaaja1");
+        peli.sekoitaPakka();
+        peli.jaaKortit();
+        peli.getSk().lisaaVuoro(peli.getPelaajat().get(0));
     }
 
     @Test
     public void testSiirraKorttiPinoon() throws Exception {
-        pelaaja.lisaaKorttiKateen(new Kortti(Kortti.HERTTA, 4));
-        assertEquals(pelaaja.getKasi().korttienMaara(), 6);
-        sk.siirraKorttiPinoon(new Kortti(Kortti.HERTTA, 4), peli.getPakka(), peli.getKaatuneetKortit(), peli.getPino(), vuoro);
-        assertEquals(pelaaja.getKasi().korttienMaara(), 5);
-        assertTrue(peli.getPino().getKortit().get(0).equals(new Kortti(Kortti.HERTTA, 4)));
+        peli.jaaKortit();
+        assertEquals(peli.getPelaajat().get(0).getKasi().korttienMaara(), 10);
+
+        Kortti kokeiltava = null;
+        for (Kortti kortti : peli.getPelaajat().get(0).getKasi().getKortit()) {
+            if (Saannot.korttiSopii(peli.getSk().getPino(), peli.getSk().getPakka(), peli.getSk().nykyinenVuoro(), kortti)) {
+                kokeiltava = kortti;
+            }
+        }
+        peli.getSk().siirraKorttiPinoon(kokeiltava);
+        assertEquals(peli.getPelaajat().get(0).getKasi().korttienMaara(), 9);
+
+        assertTrue(peli.getSk().getPino().viimeisinKortti().equals(kokeiltava));
     }
 
     @Test
     public void testTaydennaKasi() throws Exception {
-        assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 5);
-        sk.siirraKorttiPinoon(vuoro.getPelaaja().pieninKortti(), peli.getPakka(), peli.getKaatuneetKortit(), peli.getPino(), vuoro);
-        assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 4);
-        sk.taydennaKasi(peli.getPakka(), vuoro);
-        assertTrue(vuoro.getPelaaja().getKasi().korttienMaara() == 5);
-        assertTrue(peli.getPakka().korttienMaara() == 46);
+        assertEquals(peli.getPelaajat().get(0).getKasi().korttienMaara(), 5);
+        peli.getPelaajat().get(0).otaKadesta(peli.getPelaajat().get(0).getKasi().getKortit().get(0));
+        assertEquals(peli.getPelaajat().get(0).getKasi().korttienMaara(), 4);
+        peli.getSk().taydennaKasi();
+        assertEquals(peli.getPelaajat().get(0).getKasi().korttienMaara(), 5);
+        assertTrue(peli.getSk().getPakka().korttienMaara() == 46);
     }
 
     @Test
     public void testKokeileOnneaKorttiSopii() throws Exception {
         for (int i = 0; i < 10; i++) {
-            if (Saannot.korttiSopii(peli.getPino(), peli.getPakka(), vuoro, peli.getPakka().viimeisinKortti())) {
-                sk.kokeileOnnea(peli.getPakka(), peli.getPino(), peli.getKaatuneetKortit(), vuoro);
-                assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 5);
-                assertFalse(vuoro.jatkuu());
+            if (Saannot.korttiSopii(peli.getSk().getPino(), peli.getSk().getPakka(), peli.getSk().nykyinenVuoro(), peli.getSk().getPakka().viimeisinKortti())) {
+                peli.getSk().kokeileOnnea();
+                assertEquals(peli.getSk().nykyinenVuoro().getNostetut().korttienMaara(), 1);
+                assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), 5);
+                assertFalse(peli.getSk().nykyinenVuoro().jatkuu());
             }
         }
     }
@@ -59,34 +61,55 @@ public class SiirtojenkasittelijaTest {
     public void testKokeileOnneaKorttiEiSovi() throws Exception {
         int maara = 5;
         for (int i = 0; i < 10; i++) {
-            if (!Saannot.korttiSopii(peli.getPino(), peli.getPakka(), vuoro, peli.getPakka().viimeisinKortti())) {
-                sk.kokeileOnnea(peli.getPakka(), peli.getPino(), peli.getKaatuneetKortit(), vuoro);
+            if (!Saannot.korttiSopii(peli.getSk().getPino(), peli.getSk().getPakka(), peli.getSk().nykyinenVuoro(), peli.getSk().getPakka().viimeisinKortti())) {
+                peli.getSk().kokeileOnnea();
                 maara++;
-                assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), maara);
-                assertFalse(vuoro.jatkuu());
+                assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), maara);
+                assertFalse(peli.getSk().nykyinenVuoro().jatkuu());
+                assertTrue(peli.getSk().getPino().onTyhja());
             }
         }
     }
 
     @Test
     public void testNostaPino() throws Exception {
-        sk.siirraKorttiPinoon(vuoro.getPelaaja().pieninKortti(), peli.getPakka(), peli.getKaatuneetKortit(), peli.getPino(), vuoro);
-        assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 4);
-        sk.nostaPino(peli.getPino(), vuoro);
-        assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 5);
-        assertFalse(vuoro.jatkuu());
+        peli.getSk().siirraKorttiPinoon(peli.getPelaajat().get(0).pieninKortti());
+        assertEquals(peli.getSk().getVuorot().get(0).getPelaaja().getKasi().korttienMaara(), 4);
+        peli.getSk().nostaPino();
+        assertEquals(peli.getSk().getVuorot().get(0).getPelaaja().getKasi().korttienMaara(), 5);
+        assertFalse(peli.getSk().getVuorot().get(0).jatkuu());
     }
 
-//    @Test
-//    public void testPinoKaatuu() throws Exception {
-//        Integer[] eiKaatavat = {2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13};
-//
-//        while (!Saannot.pinoKaatuu(peli.getPino(), vuoro)) {
-//            sk.kokeileOnnea(peli.getPakka(), peli.getPino(), peli.getKaatuneetKortit(), vuoro);
-//        }
-//        
-//        sk.pinoKaatuu(peli.getKaatuneetKortit(), peli.getPino(), vuoro);
-//        assertEquals(peli.getPino().korttienMaara(), 0);
-//        assertTrue(!peli.getKaatuneetKortit().onTyhja());
-//    }
+    @Test
+    public void testNostaPinoJosOnPakko() throws Exception {
+        peli.getSk().getPakka().getKortit().clear();
+
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 10));
+        peli.getSk().nostaPinoJosOnPakko();
+        assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), 6);
+        assertTrue(peli.getSk().getPino().onTyhja());
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 14));
+        peli.getSk().nostaPinoJosOnPakko();
+        assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), 7);
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 9));
+        peli.getSk().nostaPinoJosOnPakko();
+        assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), 7);
+    }
+
+    @Test
+    public void testPinoKaatuuJosSaannotSallivat() throws Exception {
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 4));
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 10));
+        peli.getSk().pinoKaatuuJosSaannotSallivat();
+        assertTrue(peli.getSk().getPino().onTyhja());
+        assertEquals(peli.getSk().getKaatuneet().korttienMaara(), 2);
+
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 7));
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 11));
+        peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 14));
+        peli.getSk().pinoKaatuuJosSaannotSallivat();
+        assertTrue(peli.getSk().getPino().onTyhja());
+        assertEquals(peli.getSk().getKaatuneet().korttienMaara(), 5);
+    }
+
 }

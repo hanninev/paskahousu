@@ -11,7 +11,7 @@ public class Pakka extends Korttijoukko {
     private void luoKortit() {
         for (int i = 0; i < Kortti.MAAT.length; i++) {
             for (int j = 2; j < Kortti.ARVOT.length; j++) {
-                lisaaKortti(new Kortti(i, j));
+                lisaa(new Kortti(i, j));
             }
         }
     }
@@ -21,6 +21,6 @@ public class Pakka extends Korttijoukko {
     }
 
     public Kortti otaEnsimmainenKortti() throws Exception {
-        return otaKortti(this.viimeisinKortti());
+        return ota(this.viimeisinKortti());
     }
 }

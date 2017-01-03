@@ -2,78 +2,46 @@ package joululabra.paskahousu.sovelluslogiikka;
 
 import java.util.ArrayList;
 import java.util.List;
-import joululabra.paskahousu.domain.Korttijoukko;
-import joululabra.paskahousu.domain.Pakka;
 import joululabra.paskahousu.domain.Pelaaja;
-import joululabra.paskahousu.domain.Vuoro;
 
 public class Peli {
 
-    private Pakka pakka;
-    private Korttijoukko pino;
-    private Korttijoukko kaatuneetKortit;
+    private Siirtojenkasittelija sk;
+    private Tekoaly tekoaly;
     private List<Pelaaja> pelaajat;
-    private List<Vuoro> vuorot;
 
     public Peli() {
-        pakka = new Pakka();
-        pino = new Korttijoukko();
-        kaatuneetKortit = new Korttijoukko();
+        sk = new Siirtojenkasittelija();
         pelaajat = new ArrayList<>();
-        vuorot = new ArrayList<>();
+        tekoaly = new Tekoaly(sk);
     }
 
-    public Pakka getPakka() {
-        return pakka;
-    }
-
-    public Korttijoukko getKaatuneetKortit() {
-        return kaatuneetKortit;
-    }
-
-    public Korttijoukko getPino() {
-        return pino;
+    public Siirtojenkasittelija getSk() {
+        return sk;
     }
 
     public List<Pelaaja> getPelaajat() {
         return pelaajat;
     }
 
-    public List<Vuoro> getVuorot() {
-        return vuorot;
+    public Tekoaly getTekoaly() {
+        return tekoaly;
     }
 
-    public void lisaaPelaaja(Pelaaja pelaaja) {
-        this.pelaajat.add(pelaaja);
+    public void lisaaPelaaja(String nimi) {
+        this.pelaajat.add(new Pelaaja(nimi));
     }
 
-    public void alusta() throws Exception {
-        pakka.sekoitaKortit();
+    public void jaaKortit() throws Exception {
         for (Pelaaja pelaaja : pelaajat) {
             for (int i = 0; i < 5; i++) {
-                pelaaja.lisaaKorttiKateen(pakka.otaEnsimmainenKortti());
+                pelaaja.lisaaKateen(sk.getPakka().otaEnsimmainenKortti());
             }
         }
     }
 
-    public void kukaAloittaa() {
-        Pelaaja aloittava = pelaajat.get(0);
-        for (Pelaaja pelaaja : pelaajat) {
-            if (pelaaja.pieninKortti().getArvo() < aloittava.pieninKortti().getArvo()) {
-                aloittava = pelaaja;
-            }
-            // Tähän vielä toiminta jos kahdella pelaajalla on saman kokoinen pienin kortti.
-        }
-        lisaaVuoro(aloittava);
-    }
-
-    public Vuoro lisaaVuoro(Pelaaja pelaaja) {
-        Vuoro vuoro = new Vuoro();
-        vuorot.add(vuoro);
-        vuoro.setId(vuorot.size() + 1);
-        vuoro.setPelaaja(pelaaja);
-        vuoro.setJatkuu(true);
-        return vuoro;
+    public void sekoitaPakka() {
+        sk.getPakka().sekoitaKortit();
     }
 
     public boolean peliJatkuu() {

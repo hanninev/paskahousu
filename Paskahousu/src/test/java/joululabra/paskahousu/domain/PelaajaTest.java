@@ -12,15 +12,14 @@ public class PelaajaTest {
     Pakka pakka;
 
     public PelaajaTest() {
-        pelaaja = new Pelaaja();
+        pelaaja = new Pelaaja("Testi");
         pakka = new Pakka();
     }
 
     @Test
     public void testPieninKortti() throws Exception {
-        //   pelaaja.lisaaKorttiKateen(new Kortti(Kortti.HERTTA, 2));
-        pelaaja.lisaaKorttiKateen(new Kortti(Kortti.HERTTA, 4));
-        pelaaja.lisaaKorttiKateen(new Kortti(Kortti.PATA, 5));
+        pelaaja.lisaaKateen(new Kortti(Kortti.HERTTA, 4));
+        pelaaja.lisaaKateen(new Kortti(Kortti.PATA, 5));
 
         assertEquals(pelaaja.pieninKortti(), new Kortti(Kortti.HERTTA, 4));
     }

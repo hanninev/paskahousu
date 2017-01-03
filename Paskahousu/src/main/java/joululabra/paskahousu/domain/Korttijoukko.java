@@ -15,24 +15,16 @@ public class Korttijoukko {
         return kortit;
     }
 
-    public void lisaaKortti(Kortti kortti) {
+    public void lisaa(Kortti kortti) {
         kortit.add(kortti);
     }
 
-    public Kortti otaKortti(Kortti kortti) throws Exception {
+    public Kortti ota(Kortti kortti) throws Exception {
         if (kortit.contains(kortti)) {
             kortit.remove(kortti);
             return kortti;
         }
         throw new Exception("Korttia ei löytynyt tästä korttijoukosta");
-    }
-
-    public boolean onTyhja() {
-        if (kortit.isEmpty()) {
-            return true;
-        }
-
-        return false;
     }
 
     public Kortti viimeisinKortti() {
@@ -41,9 +33,13 @@ public class Korttijoukko {
         }
         return kortit.get(kortit.size() - 1);
     }
-
+    
+    public boolean onTyhja() {
+        return kortit.isEmpty();
+    }
+    
     public int korttienMaara() {
-        return this.kortit.size();
+        return kortit.size();
     }
 
 }

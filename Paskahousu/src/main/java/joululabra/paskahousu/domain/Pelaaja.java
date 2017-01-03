@@ -3,23 +3,29 @@ package joululabra.paskahousu.domain;
 public class Pelaaja {
 
     private String nimi;
-    private Korttijoukko kasi;
+    private Kasi kasi;
+    private boolean tekoaly;
 
-    public Pelaaja() {
-        this.nimi = null;
-        this.kasi = new Korttijoukko();
-    }
-
-    public void setNimi(String nimi) {
+    public Pelaaja(String nimi) {
         this.nimi = nimi;
+        this.kasi = new Kasi();
+        this.tekoaly = false;
     }
 
     public String getNimi() {
         return nimi;
     }
 
-    public Korttijoukko getKasi() {
+    public Kasi getKasi() {
         return kasi;
+    }
+
+    public boolean isTekoaly() {
+        return tekoaly;
+    }
+
+    public void setTekoaly(boolean tekoaly) {
+        this.tekoaly = tekoaly;
     }
 
     public Kortti pieninKortti() {
@@ -32,11 +38,11 @@ public class Pelaaja {
         return pienin;
     }
 
-    public void lisaaKorttiKateen(Kortti kortti) {
-        kasi.lisaaKortti(kortti);
+    public void lisaaKateen(Kortti kortti) {
+        kasi.lisaa(kortti);
     }
 
-    public Kortti otaKorttiKadesta(Kortti kortti) throws Exception {
-        return kasi.otaKortti(kortti);
+    public Kortti otaKadesta(Kortti kortti) throws Exception {
+        return kasi.ota(kortti);
     }
 }

@@ -1,6 +1,5 @@
 package joululabra.paskahousu.domain;
 
-import joululabra.paskahousu.domain.Pakka;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;

@@ -1,6 +1,5 @@
 package joululabra.paskahousu.sovelluslogiikka;
 
-import joululabra.paskahousu.sovelluslogiikka.Peli;
 import joululabra.paskahousu.domain.Pakka;
 import joululabra.paskahousu.domain.Pelaaja;
 import org.junit.Before;
@@ -9,32 +8,21 @@ import static org.junit.Assert.*;
 
 public class PeliTest {
 
-    Pelaaja pelaaja1;
-    Pelaaja pelaaja2;
-    Pelaaja pelaaja3;
     Peli peli;
 
     @Before
     public void setUp() throws Exception {
-        pelaaja1 = new Pelaaja();
-        pelaaja2 = new Pelaaja();
-        pelaaja3 = new Pelaaja();
+
         peli = new Peli();
-        peli.lisaaPelaaja(pelaaja1);
-        peli.lisaaPelaaja(pelaaja2);
-        peli.lisaaPelaaja(pelaaja3);
-        peli.alusta();
-        peli.kukaAloittaa();
+        peli.lisaaPelaaja("pelaaja1");
+        peli.lisaaPelaaja("pelaaja2");
+        peli.lisaaPelaaja("pelaaja3");
+        peli.sekoitaPakka();
+        peli.jaaKortit();
     }
 
     @Test
-    public void testKaikillaPelaajillaAlussaViisiKorttiaJaKortitSekoitettuEnnenJakoa() throws Exception {
-        Pakka pakka = new Pakka();
-        assertFalse(pakka.getKortit().get(0) == peli.getPakka().getKortit().get(0)
-                && pakka.getKortit().get(1) == peli.getPakka().getKortit().get(1)
-                && pakka.getKortit().get(2) == peli.getPakka().getKortit().get(2)
-                && pakka.getKortit().get(3) == peli.getPakka().getKortit().get(3));
-
+    public void testKaikillaPelaajillaAlussaViisiKorttia() throws Exception {
         for (Pelaaja pelaaja : peli.getPelaajat()) {
             assertEquals(pelaaja.getKasi().korttienMaara(), 5);
         }
@@ -43,20 +31,29 @@ public class PeliTest {
     @Test
     public void testLisaaPelaajaToimii() {
         int pelaajienMaara = peli.getPelaajat().size();
-        peli.lisaaPelaaja(new Pelaaja());
+        peli.lisaaPelaaja("Testi");
         assertTrue(peli.getPelaajat().size() == pelaajienMaara + 1);
     }
 
     @Test
     public void testPeliJatkuu() throws Exception {
-        while (!pelaaja1.getKasi().onTyhja()) {
-            pelaaja1.otaKorttiKadesta(pelaaja1.pieninKortti());
+        while (!peli.getPelaajat().get(0).getKasi().onTyhja()) {
+            peli.getPelaajat().get(0).otaKadesta(peli.getPelaajat().get(0).pieninKortti());
         }
         assertTrue(peli.peliJatkuu());
-        
-        while (!pelaaja2.getKasi().onTyhja()) {
-            pelaaja2.otaKorttiKadesta(pelaaja2.pieninKortti());
+
+        while (!peli.getPelaajat().get(1).getKasi().onTyhja()) {
+            peli.getPelaajat().get(1).otaKadesta(peli.getPelaajat().get(1).pieninKortti());
         }
         assertFalse(peli.peliJatkuu());
+    }
+
+    @Test
+    public void testSekoitaPakka() {
+        Pakka sekoittamaton = new Pakka();
+        assertFalse((sekoittamaton.getKortit().get(0) == peli.getSk().getPakka().getKortit().get(0))
+                && (sekoittamaton.getKortit().get(1) == peli.getSk().getPakka().getKortit().get(1))
+                && (sekoittamaton.getKortit().get(2) == peli.getSk().getPakka().getKortit().get(2))
+                && (sekoittamaton.getKortit().get(3) == peli.getSk().getPakka().getKortit().get(3)));
     }
 }

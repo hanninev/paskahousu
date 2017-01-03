@@ -1,7 +1,5 @@
 package joululabra.paskahousu.domain;
 
-import joululabra.paskahousu.domain.Korttijoukko;
-import joululabra.paskahousu.domain.Kortti;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -21,7 +19,7 @@ public class KorttijoukkoTest {
         kohde = new Korttijoukko();
         hertta5 = new Kortti(Kortti.HERTTA, 5);
         pata3 = new Kortti(Kortti.PATA, 3);
-        korttijoukko.lisaaKortti(hertta5);
+        korttijoukko.lisaa(hertta5);
     }
 
     @Test
@@ -34,15 +32,9 @@ public class KorttijoukkoTest {
 
     @Test
     public void testLisaaKortti() {
-        korttijoukko.lisaaKortti(pata3);
+        korttijoukko.lisaa(pata3);
         assertTrue(korttijoukko.getKortit().contains(hertta5));
         assertTrue(korttijoukko.getKortit().contains(pata3));
-    }
-
-    @Test
-    public void testGetKorttienMaara() {
-        korttijoukko.lisaaKortti(pata3);
-        assertEquals(korttijoukko.korttienMaara(), 2);
     }
 
 }
