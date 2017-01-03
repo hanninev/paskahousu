@@ -28,6 +28,12 @@ public class Pelaaja {
         this.tekoaly = tekoaly;
     }
 
+    /**
+     * Metodi kertoo, mikä pelaajan kädessä olevista korteista on arvoltaan
+     * pienin.
+     *
+     * @return pienin kortti
+     */
     public Kortti pieninKortti() {
         Kortti pienin = kasi.getKortit().get(0);
         for (Kortti kortti : kasi.getKortit()) {
@@ -38,10 +44,22 @@ public class Pelaaja {
         return pienin;
     }
 
+    /**
+     * Metodilla voidaan lisätä kyseisen käyttäjän käteen haluttu kortti.
+     *
+     * @param kortti Käteen lisättävä kortti
+     */
     public void lisaaKateen(Kortti kortti) {
         kasi.lisaa(kortti);
     }
 
+    /**
+     * Metodilla voidaan ottaa kyseisen pelaajan kädestä haluttu kortti.
+     *
+     * @param kortti Kädestä otettava kortti
+     *
+     * @return Kädestä otettu kortti
+     */
     public Kortti otaKadesta(Kortti kortti) throws Exception {
         return kasi.ota(kortti);
     }

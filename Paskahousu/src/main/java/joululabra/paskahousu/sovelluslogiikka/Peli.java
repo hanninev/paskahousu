@@ -44,6 +44,11 @@ public class Peli {
         sk.getPakka().sekoitaKortit();
     }
 
+    /**
+     * Metodi kertoo, että peli loppuu, jos vain yhdellä pelaajalla on kädessään kortteja.
+     *
+     * @return boolean
+     */
     public boolean peliJatkuu() {
         int pelissaMukana = 0;
         for (Pelaaja pelaaja : pelaajat) {
