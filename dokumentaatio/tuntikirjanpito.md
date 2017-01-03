@@ -8,3 +8,5 @@ Päivä | Tunnit | Kuvaus
 28.12.2016 | 7h | Ohjelmointia
 30.12.2016 | 4h | Ohjelmointia
 31.12.2016 | 4h | Ohjelmointia ja luokkakaavion tarkentamista
+01.01.2017 | 2h | Ohjelmointia
+03.01.2017 | 6h | Luokkakaavion tarkentamista, Javadocin aloittaminen ja ohjelmointia.
