@@ -1,13 +1,20 @@
 package joululabra.paskahousu;
 
 import java.util.Scanner;
+import javax.swing.SwingUtilities;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Pelaaja;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
+import joululabra.paskahousu.ui.Kayttoliittyma;
 
 public class Paaohjelma {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        Kayttoliittyma kayttoliittyma = new Kayttoliittyma();
+        SwingUtilities.invokeLater(kayttoliittyma);
+    }
+
+ /*   public static void main(String[] args) throws Exception {
         // väliaikainen käyttöliittymä, jolla voi testata toiminnallisuutta
 
         Scanner lukija = new Scanner(System.in);
@@ -67,5 +74,5 @@ public class Paaohjelma {
                 }
             }
         }
-    }
+    } */
 }
