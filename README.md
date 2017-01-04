@@ -8,6 +8,6 @@ Paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tekoälyä vastaa
 
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
-[PIT-raportti](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/pit/201612311310/index.html)
+[PIT-raportti](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/pit/index.html)
 
 [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/checkstyle/checkstyle.html)
