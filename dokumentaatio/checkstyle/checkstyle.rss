@@ -23,9 +23,9 @@ under the License.
     <link>${project.url}</link>
     <description>Paskahousu - Checkstyle report</description>
     <language>en-us</language>
-    <copyright>&#169;2016</copyright>
+    <copyright>&#169;2017</copyright>
     <item>
-      <title>File: 9,
+      <title>File: 13,
              Errors: 0,
              Warnings: 0,
              Infos: 0
@@ -74,7 +74,91 @@ under the License.
               </tr>
                           <tr>
                 <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.sovelluslogiikka.Tekoaly.java">joululabra/paskahousu/sovelluslogiikka/Tekoaly.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Kortti.java">joululabra/paskahousu/domain/Kortti.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.Paaohjelma.java">joululabra/paskahousu/Paaohjelma.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.ui.Kayttoliittyma.java">joululabra/paskahousu/ui/Kayttoliittyma.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Korttijoukko.java">joululabra/paskahousu/domain/Korttijoukko.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
                   <a href="${project.url}/checkstyle.html#joululabra.paskahousu.sovelluslogiikka.Saannot.java">joululabra/paskahousu/sovelluslogiikka/Saannot.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.ui.Klikkaustenkasittelija.java">joululabra/paskahousu/ui/Klikkaustenkasittelija.java</a>
                 </td>
                 <td>
                   0
@@ -130,35 +214,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Kortti.java">joululabra/paskahousu/domain/Kortti.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.Paaohjelma.java">joululabra/paskahousu/Paaohjelma.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Korttijoukko.java">joululabra/paskahousu/domain/Korttijoukko.java</a>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Kasi.java">joululabra/paskahousu/domain/Kasi.java</a>
                 </td>
                 <td>
                   0
