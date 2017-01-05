@@ -12,18 +12,12 @@ public class Siirtojenkasittelija {
 
     private Pakka pakka;
     private Korttijoukko pino;
-    private Korttijoukko kaatuneet;
     private List<Vuoro> vuorot;
 
     public Siirtojenkasittelija() {
         this.pakka = new Pakka();
         this.pino = new Korttijoukko();
-        this.kaatuneet = new Korttijoukko();
         this.vuorot = new ArrayList<>();
-    }
-
-    public Korttijoukko getKaatuneet() {
-        return kaatuneet;
     }
 
     public Pakka getPakka() {
@@ -125,7 +119,6 @@ public class Siirtojenkasittelija {
         if (Saannot.pinoKaatuu(pino, nykyinenVuoro())) {
             while (!pino.onTyhja()) {
                 Kortti kortti = pino.ota(pino.getKortit().get(0));
-                kaatuneet.lisaa(kortti);
             }
             lisaaVuoro(nykyinenVuoro().getPelaaja());
         }

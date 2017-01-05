@@ -80,7 +80,7 @@ public class SiirtojenkasittelijaTest {
         assertFalse(peli.getSk().getVuorot().get(0).jatkuu());
     }
 
-    @Test
+    /*   @Test
     public void testNostaPinoJosOnPakko() throws Exception {
         peli.getSk().getPakka().getKortit().clear();
 
@@ -94,22 +94,19 @@ public class SiirtojenkasittelijaTest {
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 9));
         peli.getSk().nostaPinoJosOnPakko();
         assertEquals(peli.getSk().nykyinenVuoro().getPelaaja().getKasi().korttienMaara(), 7);
-    }
-
+    } */
     @Test
     public void testPinoKaatuuJosSaannotSallivat() throws Exception {
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 4));
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 10));
         peli.getSk().pinoKaatuuJosSaannotSallivat();
         assertTrue(peli.getSk().getPino().onTyhja());
-        assertEquals(peli.getSk().getKaatuneet().korttienMaara(), 2);
 
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 7));
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 11));
         peli.getSk().getPino().lisaa(new Kortti(Kortti.PATA, 14));
         peli.getSk().pinoKaatuuJosSaannotSallivat();
         assertTrue(peli.getSk().getPino().onTyhja());
-        assertEquals(peli.getSk().getKaatuneet().korttienMaara(), 5);
     }
 
 }

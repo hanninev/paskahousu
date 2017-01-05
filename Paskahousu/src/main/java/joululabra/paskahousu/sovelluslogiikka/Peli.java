@@ -32,10 +32,14 @@ public class Peli {
         this.pelaajat.add(new Pelaaja(nimi));
     }
 
-    public void jaaKortit() throws Exception {
+    public void jaaKortit() {
         for (Pelaaja pelaaja : pelaajat) {
             for (int i = 0; i < 5; i++) {
-                pelaaja.lisaaKateen(sk.getPakka().otaEnsimmainenKortti());
+                try {
+                    pelaaja.lisaaKateen(sk.getPakka().otaEnsimmainenKortti());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }
@@ -45,7 +49,8 @@ public class Peli {
     }
 
     /**
-     * Metodi kertoo, että peli loppuu, jos vain yhdellä pelaajalla on kädessään kortteja.
+     * Metodi kertoo, että peli loppuu, jos vain yhdellä pelaajalla on kädessään
+     * kortteja.
      *
      * @return boolean
      */
@@ -57,5 +62,20 @@ public class Peli {
             }
         }
         return pelissaMukana != 1;
+    }
+
+    public void asetaSeuraavaPelaajaVuoroon() {
+        for (int i = 0; i < pelaajat.size(); i++) {
+            if (pelaajat.get(i).equals(sk.nykyinenVuoro().getPelaaja())) {
+                sk.nykyinenVuoro().setJatkuu(false);
+                if (i == pelaajat.size() - 1) {
+                    sk.lisaaVuoro(pelaajat.get(0));
+                    break;
+                } else {
+                    sk.lisaaVuoro(pelaajat.get(i + 1));
+                    break;
+                }
+            }
+        }
     }
 }

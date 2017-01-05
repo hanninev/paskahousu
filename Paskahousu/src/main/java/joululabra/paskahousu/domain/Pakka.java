@@ -30,6 +30,9 @@ public class Pakka extends Korttijoukko {
      * @return Pakan ensimmäinen kortti
      */
     public Kortti otaEnsimmainenKortti() throws Exception {
+        if (this.kortit.isEmpty()) {
+            throw new Exception("Et voi nostaa korttia pakasta, koska pakka on tyhjä.");
+        }
         return ota(this.viimeisinKortti());
     }
 }
