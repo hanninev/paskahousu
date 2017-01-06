@@ -21,17 +21,20 @@ public class Kayttoliittyma implements Runnable {
     private JList list;
     private DefaultListModel model;
     private JScrollPane kortitKadessa;
+    private JTextField vastustaja;
+    private JTextField pino;
+    private JTextField pakka;
 
     @Override
     public void run() {
         this.model = new DefaultListModel();
         this.list = new JList(model);
         this.kortitKadessa = new JScrollPane(list);
-
         this.peli = new Peli();
+
         peli.sekoitaPakka();
-        peli.lisaaPelaaja("Pelaaja 1");
-        peli.lisaaPelaaja("Pelaaja 2");
+        peli.lisaaPelaaja("Pelaaja");
+        peli.lisaaPelaaja("Vastustaja");
         peli.getPelaajat().get(1).setTekoaly(true);
 
         peli.jaaKortit();
@@ -50,12 +53,27 @@ public class Kayttoliittyma implements Runnable {
         GridLayout layout = new GridLayout(4, 1);
         container.setLayout(layout);
 
-        viestikentta = new JTextField("pinon yli: " + peli.getSk().getPino().viimeisinKortti());
+        viestikentta = new JTextField();
         viestikentta.setEnabled(false);
 
+        container.add(this.vastustajanJaPakanJaPinonTiedot());
         container.add(viestikentta);
         container.add(this.valikko());
         container.add(kortitKadessa);
+    }
+
+    private JPanel vastustajanJaPakanJaPinonTiedot() {
+        JPanel panel = new JPanel(new GridLayout(1, 3));
+
+        vastustaja = new JTextField();
+        pino = new JTextField();
+        pakka = new JTextField();
+        
+        panel.add(vastustaja);
+        panel.add(pino);
+        panel.add(pakka);
+
+        return panel;
     }
 
     private JPanel valikko() {
@@ -68,7 +86,7 @@ public class Kayttoliittyma implements Runnable {
 
         valmis.setEnabled(false);
 
-        Klikkaustenkasittelija kasittelija = new Klikkaustenkasittelija(peli, list, model, siirraKortti, kokeileOnnea, nostaPino, valmis, viestikentta);
+        Klikkaustenkasittelija kasittelija = new Klikkaustenkasittelija(peli, vastustaja, pino, pakka, list, model, siirraKortti, kokeileOnnea, nostaPino, valmis, viestikentta);
         kokeileOnnea.addActionListener(kasittelija);
         nostaPino.addActionListener(kasittelija);
         valmis.addActionListener(kasittelija);

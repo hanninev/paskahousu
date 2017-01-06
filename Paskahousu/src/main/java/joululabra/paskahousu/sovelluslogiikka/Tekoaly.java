@@ -13,6 +13,7 @@ public class Tekoaly {
     }
 
     public void valitseToiminto() throws Exception {
+        try {
         if (!kaykoMikaanKortti()) {
             sk.kokeileOnnea();
         } else {
@@ -20,7 +21,9 @@ public class Tekoaly {
                 laitaKortti();
             }
         }
-        sk.taydennaKasi();
+        } catch (Exception e) {
+            
+        }
     }
 
     public void laitaKortti() throws Exception {

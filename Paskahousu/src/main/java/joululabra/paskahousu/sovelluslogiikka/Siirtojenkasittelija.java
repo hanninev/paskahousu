@@ -55,6 +55,8 @@ public class Siirtojenkasittelija {
             Kortti siirrettava = nykyinenVuoro().otaKadesta(kortti);
             pino.lisaa(siirrettava);
             pinoKaatuuJosSaannotSallivat();
+        } else {
+            throw new Exception(kortti.toString() + " ei ole sopiva pinoon.");
         }
     }
 
@@ -64,7 +66,7 @@ public class Siirtojenkasittelija {
      *
      */
     public void taydennaKasi() throws Exception {
-        if (Saannot.kadessaLiianVahanKortteja(nykyinenVuoro(), pakka)) {
+        while (Saannot.kadessaLiianVahanKortteja(nykyinenVuoro(), pakka)) {
             Kortti siirrettava = pakka.otaEnsimmainenKortti();
             nykyinenVuoro().lisaaKateen(siirrettava);
         }
@@ -106,7 +108,7 @@ public class Siirtojenkasittelija {
      * nostaa pino.
      */
     public void nostaPinoJosOnPakko() throws Exception {
-        if (Saannot.joutuuAinaNostamaanPinon(pino)) {
+        if (Saannot.pakkoNostaaPino(pino)) {
             nostaPino();
         }
     }

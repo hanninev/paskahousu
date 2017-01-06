@@ -17,7 +17,7 @@ public class Saannot {
      *
      * @return boolean
      */
-    public static boolean joutuuAinaNostamaanPinon(Korttijoukko pino) {
+    public static boolean pakkoNostaaPino(Korttijoukko pino) {
         return ((pino.korttienMaara() == 1)
                 && ((pino.viimeisinKortti().getArvo() == 10)
                 || (pino.viimeisinKortti().getArvo() == 14)));
@@ -87,7 +87,7 @@ public class Saannot {
         if (vuoro.getLaitetut().onTyhja()) {
             return vuoronEnsimmainenSiirtoOk(pakka, pino, kortti);
         } else {
-            return samaArvo(vuoro, kortti);
+            return vuoronToinenTaiUseampiSiirtoOk(vuoro, kortti);
         }
     }
 
@@ -130,16 +130,16 @@ public class Saannot {
     }
 
     /**
-     * Metodi kertoo, onko kortilla sama arvo kuin saman vuoron ensimmäisellä
-     * kortilla.
+     * Metodi kertoo, sopiiko saman vuoron aikana laitettu seuraava kortti
+     * pakkaan, jos vuoron ensimmäinen kortti on laitettu.
      *
      * @param vuoro Käsiteltävä vuoro
      * @param kortti Kokeiltava kortti
      *
      * @return boolean
      */
-    public static boolean samaArvo(Vuoro vuoro, Kortti kortti) {
-        return (vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo());
+    public static boolean vuoronToinenTaiUseampiSiirtoOk(Vuoro vuoro, Kortti kortti) {
+        return ((vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo()) && (kortti.getArvo() != 2) && (kortti.getArvo() != 10) && (kortti.getArvo() != 14));
     }
 
 }

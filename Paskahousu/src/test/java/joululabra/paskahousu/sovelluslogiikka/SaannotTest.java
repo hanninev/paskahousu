@@ -28,14 +28,14 @@ public class SaannotTest {
     @Test
     public void testJoutuuAinaNostamaanPinonJosTyhjallaPoydallaKymppiTaiAssa() throws Exception {
         pino.lisaa(new Kortti(Kortti.HERTTA, 10));
-        assertTrue(Saannot.joutuuAinaNostamaanPinon(pino));
+        assertTrue(Saannot.pakkoNostaaPino(pino));
         pino.ota(new Kortti(Kortti.HERTTA, 10));
         pino.lisaa(new Kortti(Kortti.HERTTA, 14));
-        assertTrue(Saannot.joutuuAinaNostamaanPinon(pino));
+        assertTrue(Saannot.pakkoNostaaPino(pino));
         pino.ota(new Kortti(Kortti.HERTTA, 14));
         pino.lisaa(new Kortti(Kortti.PATA, 3));
         pino.lisaa(new Kortti(Kortti.HERTTA, 10));
-        assertFalse(Saannot.joutuuAinaNostamaanPinon(pino));
+        assertFalse(Saannot.pakkoNostaaPino(pino));
     }
 
     @Test
@@ -100,8 +100,8 @@ public class SaannotTest {
     public void testSamaArvo() {
         pino.lisaa(new Kortti(Kortti.HERTTA, 4));
         vuoro.getLaitetut().lisaa(new Kortti(Kortti.HERTTA, 4));
-        assertTrue(Saannot.samaArvo(vuoro, new Kortti(Kortti.PATA, 4)));
-        assertFalse(Saannot.samaArvo(vuoro, new Kortti(Kortti.HERTTA, 5)));
+        assertTrue(Saannot.vuoronToinenTaiUseampiSiirtoOk(vuoro, new Kortti(Kortti.PATA, 4)));
+        assertFalse(Saannot.vuoronToinenTaiUseampiSiirtoOk(vuoro, new Kortti(Kortti.HERTTA, 5)));
     }
 
     @Test
