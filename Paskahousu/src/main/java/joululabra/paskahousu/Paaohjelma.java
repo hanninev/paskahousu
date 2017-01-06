@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Pelaaja;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
-import joululabra.paskahousu.ui.Kayttoliittyma;
+import joululabra.paskahousu.gui.Kayttoliittyma;
 
 public class Paaohjelma {
 

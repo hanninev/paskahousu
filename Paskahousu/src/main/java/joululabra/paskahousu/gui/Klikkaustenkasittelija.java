@@ -1,65 +1,103 @@
-package joululabra.paskahousu.ui;
+package joululabra.paskahousu.gui;
 
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JList;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
 import joululabra.paskahousu.sovelluslogiikka.Saannot;
 
 public class Klikkaustenkasittelija implements ActionListener {
 
-    private JButton siirraKortti;
     private JButton kokeileOnnea;
     private JButton nostaPino;
     private JButton valmis;
-    private JTextField viestikentta;
+    private JLabel viestikentta;
     private Peli peli;
-    private JList list;
+    private JPanel kortitKadessa;
     private DefaultListModel model;
-    private JTextField vastustaja;
-    private JTextField pino;
-    private JTextField pakka;
+    private JLabel vastustaja;
+    private JLabel pino;
+    private JLabel pakka;
+    private Map<JButton, Kortti> buttonitJaKortit;
 
-    public Klikkaustenkasittelija(Peli peli, JTextField vastustaja, JTextField pino, JTextField pakka, JList list, DefaultListModel model, JButton siirraKortti, JButton kokeileOnnea, JButton nostaPino, JButton valmis, JTextField viestikentta) {
+    public Klikkaustenkasittelija(Peli peli, JLabel vastustaja, JLabel pino, JLabel pakka, JPanel kortitKadessa, JButton kokeileOnnea, JButton nostaPino, JButton valmis, JLabel viestikentta) {
         this.peli = peli;
-        this.siirraKortti = siirraKortti;
         this.kokeileOnnea = kokeileOnnea;
         this.nostaPino = nostaPino;
         this.valmis = valmis;
         this.viestikentta = viestikentta;
-        this.model = model;
-        this.list = list;
+        this.kortitKadessa = kortitKadessa;
         this.vastustaja = vastustaja;
         this.pino = pino;
         this.pakka = pakka;
+        this.buttonitJaKortit = new HashMap<>();
         paivitaNakyma();
     }
 
     public void paivitaNakyma() {
-        model.clear();
+        buttonitJaKortit.clear();
+        kortitKadessa.removeAll();
 
         for (Kortti kortti : peli.getPelaajat().get(0).getKasi().getKortit()) {
-            model.addElement(kortti);
+            ImageIcon imageIcon = muunnaKuvaksi(kortti);
+            JButton korttiButton = new JButton(imageIcon);
+            korttiButton.setBackground(Color.WHITE);
+            korttiButton.addActionListener(this);
+            buttonitJaKortit.put(korttiButton, kortti);
+            kortitKadessa.add(korttiButton);
         }
 
+        kortitKadessa.setLayout(new GridLayout(1, buttonitJaKortit.size()));
+        kortitKadessa.validate();
+        kortitKadessa.repaint();
+
         vastustaja.setText(peli.getPelaajat().get(1).getNimi() + ", kortteja kädessä " + peli.getPelaajat().get(1).getKasi().korttienMaara());
-        pino.setText("Kortteja pinossa: " + peli.getSk().getPino().korttienMaara() + "\n Pinon ylin: " + peli.getSk().getPino().viimeisinKortti());
+        pino.setText("Pinossa " + peli.getSk().getPino().korttienMaara() + " korttia.");
+        pino.setIcon(muunnaKuvaksi(peli.getSk().getPino().viimeisinKortti()));
+        pino.setHorizontalTextPosition(JLabel.CENTER);
+        pino.setVerticalTextPosition(JLabel.BOTTOM);
         pakka.setText("Kortteja pakassa: " + peli.getSk().getPakka().korttienMaara());
+        
+        pakka.repaint();
+    }
+
+    public ImageIcon muunnaKuvaksi(Kortti kortti) {
+        if (kortti == null) {
+            kortti = new Kortti(Kortti.HERTTA, 0);
+        }
+        ImageIcon imageIcon = new ImageIcon(Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
+        Image image = imageIcon.getImage();
+        Image newimg = image.getScaledInstance(100, 145, java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(newimg);
+        return imageIcon;
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        try {
 
-            if (ae.getSource() == siirraKortti) {
-                kortinSiirtaminen();
-                paivitaNakyma();
-                viestikentta.setText("");
-            } else if (ae.getSource() == kokeileOnnea) {
+        try {
+            for (JButton jbutton : buttonitJaKortit.keySet()) {
+                if (ae.getSource() == (JButton) jbutton) {
+                    peli.getSk().siirraKorttiPinoon(buttonitJaKortit.get(jbutton));
+                    valmis.setEnabled(true);
+                    kokeileOnnea.setEnabled(false);
+                    nostaPino.setEnabled(false);
+                    break;
+                }
+
+            }
+
+            if (ae.getSource() == kokeileOnnea) {
                 peli.getSk().kokeileOnnea();
                 pelaajanVuoroPaattyy();
                 paivitaNakyma();
@@ -73,18 +111,11 @@ public class Klikkaustenkasittelija implements ActionListener {
                 paivitaNakyma();
             }
 
+            paivitaNakyma();
+
         } catch (Exception e) {
             this.viestikentta.setText(e.getMessage());
         }
-    }
-
-    public void kortinSiirtaminen() throws Exception {
-        int index = list.getSelectedIndex();
-        Kortti kortti = (Kortti) model.getElementAt(index);
-        peli.getSk().siirraKorttiPinoon(kortti);
-        valmis.setEnabled(true);
-        kokeileOnnea.setEnabled(false);
-        nostaPino.setEnabled(false);
     }
 
     public void pelaajanVuoroPaattyy() throws Exception {
@@ -94,8 +125,7 @@ public class Klikkaustenkasittelija implements ActionListener {
 
     public void kasittelePainikkeet() throws Exception {
         if (!peli.peliJatkuu()) {
-            viestikentta.setText(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " voitti!");
-            siirraKortti.setEnabled(false);
+            viestikentta.setText(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " hävisi!");
             valmis.setEnabled(false);
             kokeileOnnea.setEnabled(false);
             nostaPino.setEnabled(false);
