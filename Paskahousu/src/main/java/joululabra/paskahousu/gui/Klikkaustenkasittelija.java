@@ -29,6 +29,7 @@ public class Klikkaustenkasittelija implements ActionListener {
     private JLabel pino;
     private JLabel pakka;
     private Map<JButton, Kortti> buttonitJaKortit;
+    private StringBuilder sb;
 
     public Klikkaustenkasittelija(Peli peli, JLabel vastustaja, JLabel pino, JLabel pakka, JPanel kortitKadessa, JButton kokeileOnnea, JButton nostaPino, JButton valmis, JLabel viestikentta) {
         this.peli = peli;
@@ -49,7 +50,7 @@ public class Klikkaustenkasittelija implements ActionListener {
         kortitKadessa.removeAll();
 
         for (Kortti kortti : peli.getPelaajat().get(0).getKasi().getKortit()) {
-            ImageIcon imageIcon = muunnaKuvaksi(kortti);
+            ImageIcon imageIcon = haeKortinKuvaJaMuunnaKoko(kortti);
             JButton korttiButton = new JButton(imageIcon);
             korttiButton.setBackground(Color.WHITE);
             korttiButton.addActionListener(this);
@@ -61,17 +62,17 @@ public class Klikkaustenkasittelija implements ActionListener {
         kortitKadessa.validate();
         kortitKadessa.repaint();
 
-        vastustaja.setText(peli.getPelaajat().get(1).getNimi() + ", kortteja kädessä " + peli.getPelaajat().get(1).getKasi().korttienMaara());
+        vastustaja.setText("<html>" + peli.getPelaajat().get(1).getNimi() + ", kortteja kädessä " + peli.getPelaajat().get(1).getKasi().korttienMaara() + "<br><br>Tässä myös vastustajan kortit<br>testauksen helpottamiseksi:<br>" + peli.getPelaajat().get(1).getKasi().getKortit() + "</html>");
         pino.setText("Pinossa " + peli.getSk().getPino().korttienMaara() + " korttia.");
-        pino.setIcon(muunnaKuvaksi(peli.getSk().getPino().viimeisinKortti()));
+        pino.setIcon(haeKortinKuvaJaMuunnaKoko(peli.getSk().getPino().viimeisinKortti()));
         pino.setHorizontalTextPosition(JLabel.CENTER);
         pino.setVerticalTextPosition(JLabel.BOTTOM);
         pakka.setText("Kortteja pakassa: " + peli.getSk().getPakka().korttienMaara());
-        
+
         pakka.repaint();
     }
 
-    public ImageIcon muunnaKuvaksi(Kortti kortti) {
+    public ImageIcon haeKortinKuvaJaMuunnaKoko(Kortti kortti) {
         if (kortti == null) {
             kortti = new Kortti(Kortti.HERTTA, 0);
         }
@@ -84,57 +85,70 @@ public class Klikkaustenkasittelija implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-
         try {
+            sb = new StringBuilder();
+
             for (JButton jbutton : buttonitJaKortit.keySet()) {
                 if (ae.getSource() == (JButton) jbutton) {
                     peli.getSk().siirraKorttiPinoon(buttonitJaKortit.get(jbutton));
                     valmis.setEnabled(true);
                     kokeileOnnea.setEnabled(false);
                     nostaPino.setEnabled(false);
-                    break;
                 }
-
             }
 
             if (ae.getSource() == kokeileOnnea) {
                 peli.getSk().kokeileOnnea();
-                pelaajanVuoroPaattyy();
-                paivitaNakyma();
+                if (peli.getSk().nykyinenVuoro().getNostetut().getKortit().size() > 1) {
+                    sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getNostetut().getKortit().get(0) + ". Kortti ei käynyt pinoon, joten jouduit nostamaan pinon.<br>");
+                } else {
+                    sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getNostetut().getKortit().get(0) + ". Sinulla kävi onni. Kortti oli sopiva pinoon.<br>");
+                }
+                peli.asetaSeuraavaPelaajaVuoroon();
+                kasitteleVuoro();
             } else if (ae.getSource() == nostaPino) {
                 peli.getSk().nostaPino();
-                pelaajanVuoroPaattyy();
-                paivitaNakyma();
+                peli.asetaSeuraavaPelaajaVuoroon();
+                kasitteleVuoro();
             } else if (ae.getSource() == valmis) {
                 peli.getSk().taydennaKasi();
-                pelaajanVuoroPaattyy();
-                paivitaNakyma();
+                peli.asetaSeuraavaPelaajaVuoroon();
+                kasitteleVuoro();
             }
 
             paivitaNakyma();
 
         } catch (Exception e) {
-            this.viestikentta.setText(e.getMessage());
+            viestikentta.setText("<html><br><br><br><center>" + e.getMessage() + "</center></html>");
         }
     }
 
-    public void pelaajanVuoroPaattyy() throws Exception {
-        peli.asetaSeuraavaPelaajaVuoroon();
-        kasittelePainikkeet();
+    public void paivitaPainikkeetJaViestikentta() {
+        this.kokeileOnnea.repaint();
+        this.nostaPino.repaint();
+        this.viestikentta.repaint();
+        this.valmis.repaint();
     }
 
-    public void kasittelePainikkeet() throws Exception {
+    public void kasitteleVuoro() throws Exception {
         if (!peli.peliJatkuu()) {
-            viestikentta.setText(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " hävisi!");
+            sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " hävisi!<br>");
             valmis.setEnabled(false);
             kokeileOnnea.setEnabled(false);
             nostaPino.setEnabled(false);
+            kortitKadessa.setEnabled(false);
         } else {
 
             if (Saannot.pakkoNostaaPino(peli.getSk().getPino())) {
-                viestikentta.setText(peli.getSk().nykyinenVuoro().getPelaaja().toString() + " joutui nostamaan pinon.");
+                if (peli.getSk().nykyinenVuoro().getPelaaja().equals(peli.getPelaajat().get(0))) {
+                    sb.append("Sinä jouduit nostamaan kortin.<br>");
+                } else {
+                    sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi() + " joutui nostamaan kortin.<br>");
+                }
                 peli.getSk().nostaPino();
-                peli.asetaSeuraavaPelaajaVuoroon();
+                kortitKadessa.setEnabled(false);
+                kokeileOnnea.setEnabled(false);
+                nostaPino.setEnabled(true);
             }
 
             valmis.setEnabled(false);
@@ -148,6 +162,8 @@ public class Klikkaustenkasittelija implements ActionListener {
                 nostaPino.setEnabled(false);
             }
 
+            paivitaNakyma();
+
             if (!peli.getSk().nykyinenVuoro().getPelaaja().isTekoaly()) {
                 return;
             }
@@ -158,21 +174,20 @@ public class Klikkaustenkasittelija implements ActionListener {
     public void vastustajaSiirtaa() throws Exception {
         Integer pinonKoko = peli.getSk().getPino().korttienMaara();
         peli.getTekoaly().valitseToiminto();
-        StringBuilder sb = new StringBuilder();
-        if (peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == pinonKoko) {
+        if ((peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == pinonKoko) && (pinonKoko != 0)) {
             sb.append("Vastustaja nosti pinon. ");
         } else if (peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == 1) {
-            sb.append("Vastustaja kokeili onneaan ja kortti oli sopiva. ");
+            sb.append("Vastustaja kokeili onneaan ja kortti oli sopiva. <br>");
         } else if (peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == 1 + pinonKoko) {
-            sb.append("Vastustaja kokeili onneaan ja joutui nostamaan pinon. ");
+            sb.append("Vastustaja kokeili onneaan ja joutui nostamaan pinon. <br>");
         }
         if (!peli.getSk().nykyinenVuoro().getLaitetut().onTyhja()) {
-            sb.append("Vastustaja laittoi pinoon kortit: " + peli.getSk().nykyinenVuoro().getLaitetut().getKortit() + " ");
+            sb.append("Vastustaja laittoi pinoon kortit: " + peli.getSk().nykyinenVuoro().getLaitetut().getKortit() + " <br>");
         }
         sb.append("Sinun vuorosi.");
-        viestikentta.setText(sb.toString());
+        viestikentta.setText("<html><br><center>" + sb.toString() + "</center></html>");
         peli.getSk().taydennaKasi();
         peli.asetaSeuraavaPelaajaVuoroon();
-        kasittelePainikkeet();
+        kasitteleVuoro();
     }
 }

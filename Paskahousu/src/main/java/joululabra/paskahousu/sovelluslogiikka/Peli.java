@@ -11,7 +11,7 @@ public class Peli {
     private List<Pelaaja> pelaajat;
 
     public Peli() {
-        sk = new Siirtojenkasittelija();
+        sk = new Siirtojenkasittelija(this);
         pelaajat = new ArrayList<>();
         tekoaly = new Tekoaly(sk);
     }

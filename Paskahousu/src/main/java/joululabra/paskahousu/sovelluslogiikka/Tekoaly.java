@@ -14,15 +14,22 @@ public class Tekoaly {
 
     public void valitseToiminto() throws Exception {
         try {
-        if (!kaykoMikaanKortti()) {
-            sk.kokeileOnnea();
-        } else {
-            while (kaykoMikaanKortti()) {
-                laitaKortti();
+            if (Saannot.pakkoNostaaPino(sk.getPino())) {
+                sk.nostaPino();
+                return;
             }
-        }
+
+            if (!kaykoMikaanKortti()) {
+                sk.kokeileOnnea();
+            } else if (kaykoMikaanKortti()) {
+                while (kaykoMikaanKortti()) {
+                    laitaKortti();
+                }
+            } else {
+                sk.nostaPino();
+            }
         } catch (Exception e) {
-            
+            System.out.println(e);
         }
     }
 
@@ -31,7 +38,9 @@ public class Tekoaly {
 
         for (Kortti kortti : kortitKadessa) {
             if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
-                sk.siirraKorttiPinoon(kortti);
+                if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
+                    sk.siirraKorttiPinoon(kortti);
+                }
             }
         }
     }

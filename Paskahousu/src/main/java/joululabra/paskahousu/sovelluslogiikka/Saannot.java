@@ -141,5 +141,4 @@ public class Saannot {
     public static boolean vuoronToinenTaiUseampiSiirtoOk(Vuoro vuoro, Kortti kortti) {
         return ((vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo()) && (kortti.getArvo() != 2) && (kortti.getArvo() != 10) && (kortti.getArvo() != 14));
     }
-
 }
