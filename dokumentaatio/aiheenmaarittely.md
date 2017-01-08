@@ -4,7 +4,9 @@
 
 Toteutetaan paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tietokonetta vastaan. Pelissä tavoitteena on päästä korteista eroon ensimmäisenä.
 
-Vastustaja on tyhmä ja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain arpoo niistä yhden. Jos yksikään kortti ei sovi, vastustaja kokeilee onneaan pakasta tai nostaa pinon.
+Vastustaja on tyhmä ja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastustajan kädessä oleva kortti sopii pinoon, niin vastustaja vain arpoo niistä yhden. Jos yksikään kortti ei sovi, vastustaja kokeilee onneaan pakasta tai nostaa pinon.
+
+Sovelluslogiikka ja domain-luokat ovat toteutettu siten, että pelissä voisi olla myös useampi pelaaja. Tämä mahdollistaa pelin jatkokehittämisen. Nykyinen käyttöliittymä on kovakoodattu siten, että pelissä on aina vain kaksi pelaajaa - käyttäjä ja vastustajana tietokone.
 
 **Käyttäjät:** Pelaaja
 
