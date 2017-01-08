@@ -2,9 +2,9 @@
 
 **Aihe:** Paskahousu
 
-Toteutetaan paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata vastustajaa vastaan, joka on kehittymätön tekoäly. Pelin ideana on se, että kummalta loppuu kortit ensimmäisenä kädestä on voittaja.
+Toteutetaan paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tietokonetta vastaan. Pelissä tavoitteena on päästä korteista eroon ensimmäisenä.
 
-Vastustaja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain arpoo niistä yhden.
+Vastustaja on tyhmä ja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain arpoo niistä yhden. Jos yksikään kortti ei sovi, vastustaja kokeilee onneaan pakasta tai nostaa pinon.
 
 **Käyttäjät:** Pelaaja
 
