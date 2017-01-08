@@ -4,8 +4,7 @@
 
 Toteutetaan paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata vastustajaa vastaan, joka on kehittymätön tekoäly. Pelin ideana on se, että kummalta loppuu kortit ensimmäisenä kädestä on voittaja.
 
-Lähdetään aluksi siitä, että vastustaja on "tyhmä". Vastustaja laittaa pinoon ensimmäisen siihen sopivan kortin. 
-Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain arpoo niistä yhden.
+Vastustaja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastustajan kädessä oleva kortti käy pinoon, niin vastustaja vain arpoo niistä yhden.
 
 **Käyttäjät:** Pelaaja
 
