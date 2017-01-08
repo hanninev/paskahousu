@@ -25,7 +25,7 @@
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment">     * @return boolean</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> joutuuAinaNostamaanPinon(<a href="../../../joululabra/paskahousu/domain/Korttijoukko.html">Korttijoukko</a> pino) {
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> pakkoNostaaPino(<a href="../../../joululabra/paskahousu/domain/Korttijoukko.html">Korttijoukko</a> pino) {
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>          <strong class="jxr_keyword">return</strong> ((pino.korttienMaara() == 1)
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>                  &amp;&amp; ((pino.viimeisinKortti().getArvo() == 10)
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>                  || (pino.viimeisinKortti().getArvo() == 14)));
@@ -95,7 +95,7 @@
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">if</strong> (vuoro.getLaitetut().onTyhja()) {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">return</strong> vuoronEnsimmainenSiirtoOk(pakka, pino, kortti);
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>              <strong class="jxr_keyword">return</strong> samaArvo(vuoro, kortti);
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>              <strong class="jxr_keyword">return</strong> vuoronToinenTaiUseampiSiirtoOk(vuoro, kortti);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          }
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      }
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  
@@ -138,19 +138,18 @@
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>     }
 <a class="jxr_linenumber" name="L131" href="#L131">131</a> 
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * Metodi kertoo, onko kortilla sama arvo kuin saman vuoron ensimmäisellä</em>
-<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     * kortilla.</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * Metodi kertoo, sopiiko saman vuoron aikana laitettu seuraava kortti</em>
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     * pakkaan, jos vuoron ensimmäinen kortti on laitettu.</em>
 <a class="jxr_linenumber" name="L135" href="#L135">135</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L136" href="#L136">136</a> <em class="jxr_javadoccomment">     * @param vuoro Käsiteltävä vuoro</em>
 <a class="jxr_linenumber" name="L137" href="#L137">137</a> <em class="jxr_javadoccomment">     * @param kortti Kokeiltava kortti</em>
 <a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_javadoccomment">     * @return boolean</em>
 <a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> samaArvo(<a href="../../../joululabra/paskahousu/domain/Vuoro.html">Vuoro</a> vuoro, <a href="../../../joululabra/paskahousu/domain/Kortti.html">Kortti</a> kortti) {
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> (vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo());
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> vuoronToinenTaiUseampiSiirtoOk(<a href="../../../joululabra/paskahousu/domain/Vuoro.html">Vuoro</a> vuoro, <a href="../../../joululabra/paskahousu/domain/Kortti.html">Kortti</a> kortti) {
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> ((vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo()) &amp;&amp; (kortti.getArvo() != 2) &amp;&amp; (kortti.getArvo() != 10) &amp;&amp; (kortti.getArvo() != 14));
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
-<a class="jxr_linenumber" name="L144" href="#L144">144</a> 
-<a class="jxr_linenumber" name="L145" href="#L145">145</a> }
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2017. All rights reserved.</div>

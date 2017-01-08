@@ -74,7 +74,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.sovelluslogiikka.Tekoaly.java">joululabra/paskahousu/sovelluslogiikka/Tekoaly.java</a>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.gui.Kayttoliittyma.java">joululabra/paskahousu/gui/Kayttoliittyma.java</a>
                 </td>
                 <td>
                   0
@@ -116,20 +116,6 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.ui.Kayttoliittyma.java">joululabra/paskahousu/ui/Kayttoliittyma.java</a>
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-                <td>
-                  0
-                </td>
-              </tr>
-                          <tr>
-                <td>
                   <a href="${project.url}/checkstyle.html#joululabra.paskahousu.domain.Korttijoukko.java">joululabra/paskahousu/domain/Korttijoukko.java</a>
                 </td>
                 <td>
@@ -144,7 +130,7 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.sovelluslogiikka.Saannot.java">joululabra/paskahousu/sovelluslogiikka/Saannot.java</a>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.tekoaly.Tekoaly.java">joululabra/paskahousu/tekoaly/Tekoaly.java</a>
                 </td>
                 <td>
                   0
@@ -158,7 +144,21 @@ under the License.
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.ui.Klikkaustenkasittelija.java">joululabra/paskahousu/ui/Klikkaustenkasittelija.java</a>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.gui.Klikkaustenkasittelija.java">joululabra/paskahousu/gui/Klikkaustenkasittelija.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#joululabra.paskahousu.sovelluslogiikka.Saannot.java">joululabra/paskahousu/sovelluslogiikka/Saannot.java</a>
                 </td>
                 <td>
                   0
