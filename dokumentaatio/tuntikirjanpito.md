@@ -10,3 +10,6 @@ Päivä | Tunnit | Kuvaus
 31.12.2016 | 4h | Ohjelmointia ja luokkakaavion tarkentamista
 01.01.2017 | 2h | Ohjelmointia
 03.01.2017 | 6h | Luokkakaavion tarkentamista, Javadocin aloittaminen ja ohjelmointia.
+05.01.2017 | 3h | Käyttöliittymän ohjelmointia
+06.01.2017 | 6h | Käyttöliittymän ohjelmointia
+06.01.2017 | 3h | Käyttöliittymän ohjelmointia
