@@ -18,3 +18,8 @@ Vastustaja laittaa pinoon ensimmäisen siihen sopivan kortin. Jos useampi vastus
 
 ## Luokkakaavio
 ![Luokkakaavio](/dokumentaatio/luokkakaavio2.png)
+
+## Sekvenssikaavioita
+![Sekvenssikaavio](/dokumentaatio/sekvenssi1.png)
+
+![Sekvenssikaavio](/dokumentaatio/sekvenssi2.png)
