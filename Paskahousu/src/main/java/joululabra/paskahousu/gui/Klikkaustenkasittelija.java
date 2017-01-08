@@ -24,7 +24,6 @@ public class Klikkaustenkasittelija implements ActionListener {
     private JLabel viestikentta;
     private Peli peli;
     private JPanel kortitKadessa;
-    private DefaultListModel model;
     private JLabel vastustaja;
     private JLabel pino;
     private JLabel pakka;
@@ -104,11 +103,9 @@ public class Klikkaustenkasittelija implements ActionListener {
                 } else {
                     sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getNostetut().getKortit().get(0) + ". Sinulla kävi onni. Kortti oli sopiva pinoon.<br>");
                 }
-                peli.asetaSeuraavaPelaajaVuoroon();
                 kasitteleVuoro();
             } else if (ae.getSource() == nostaPino) {
                 peli.getSk().nostaPino();
-                peli.asetaSeuraavaPelaajaVuoroon();
                 kasitteleVuoro();
             } else if (ae.getSource() == valmis) {
                 peli.getSk().taydennaKasi();

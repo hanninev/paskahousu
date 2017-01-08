@@ -1,8 +1,10 @@
-package joululabra.paskahousu.sovelluslogiikka;
+package joululabra.paskahousu.tekoaly;
 
 import java.util.ArrayList;
 import java.util.List;
 import joululabra.paskahousu.domain.Kortti;
+import joululabra.paskahousu.sovelluslogiikka.Saannot;
+import joululabra.paskahousu.sovelluslogiikka.Siirtojenkasittelija;
 
 public class Tekoaly {
 

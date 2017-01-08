@@ -1,7 +1,8 @@
-package joululabra.paskahousu.sovelluslogiikka;
+package joululabra.paskahousu.tekoaly;
 
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Pelaaja;
+import joululabra.paskahousu.sovelluslogiikka.Peli;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -11,6 +12,7 @@ public class TekoalyTest {
     Pelaaja pelaaja;
     Pelaaja vastustaja;
     Peli peli;
+    Tekoaly tekoaly;
 
     @Before
     public void setUp() throws Exception {
@@ -19,6 +21,7 @@ public class TekoalyTest {
         peli.lisaaPelaaja("Vastustaja");
         pelaaja = peli.getPelaajat().get(0);
         vastustaja = peli.getPelaajat().get(1);
+        tekoaly = new Tekoaly(peli.getSk());
 
         pelaaja.setTekoaly(true);
         peli.sekoitaPakka();
@@ -52,6 +55,14 @@ public class TekoalyTest {
         peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 13));
         peli.getSk().lisaaVuoro(pelaaja);
         assertFalse(peli.getTekoaly().kaykoMikaanKortti());
+    }
 
+    @Test
+    public void testValitseToiminto() throws Exception {
+        peli.getSk().lisaaVuoro(vastustaja);
+        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 14));
+        peli.getSk().lisaaVuoro(pelaaja);
+        tekoaly.valitseToiminto();
+        assertEquals(pelaaja.getKasi().getKortit().size(), 6);
     }
 }

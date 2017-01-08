@@ -3,6 +3,7 @@ package joululabra.paskahousu.sovelluslogiikka;
 import java.util.ArrayList;
 import java.util.List;
 import joululabra.paskahousu.domain.Pelaaja;
+import joululabra.paskahousu.tekoaly.Tekoaly;
 
 public class Peli {
 

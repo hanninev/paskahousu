@@ -87,6 +87,7 @@ public class Siirtojenkasittelija {
             nykyinenVuoro().lisaaKateen(kortti);
             if (Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
                 siirraKorttiPinoon(kortti);
+                peli.asetaSeuraavaPelaajaVuoroon();
             } else {
                 nostaPino();
             }
@@ -101,6 +102,7 @@ public class Siirtojenkasittelija {
             Kortti kortti = pino.ota(pino.getKortit().get(0));
             nykyinenVuoro().lisaaKateen(kortti);
         }
+        peli.asetaSeuraavaPelaajaVuoroon();
     }
 
     /**
