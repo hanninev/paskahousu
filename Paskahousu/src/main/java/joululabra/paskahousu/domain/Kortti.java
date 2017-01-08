@@ -1,5 +1,8 @@
 package joululabra.paskahousu.domain;
 
+/**
+ * Luokka tarjoaa yksittäiseen korttii liittyviä metodeja.
+ */
 public class Kortti implements Comparable<Kortti> {
 
     public static final int PATA = 0;
@@ -12,6 +15,11 @@ public class Kortti implements Comparable<Kortti> {
     private int arvo;
     private int maa;
 
+    /**
+     * Metodi tekee uuden olioilmentymän luokasta Kortti.
+     * @param arvo Kortin arvo
+     * @param maa Kortin maa
+     */
     public Kortti(int maa, int arvo) {
         this.maa = maa;
         this.arvo = arvo;

@@ -1,5 +1,8 @@
 package joululabra.paskahousu.domain;
 
+/**
+ * Luokka tarjoaa yksittäiseen vuoroon liittyviä metodeita.
+ */
 public class Vuoro {
 
     private Pelaaja pelaaja;
@@ -7,6 +10,11 @@ public class Vuoro {
     private Korttijoukko laitetut;
     private boolean jatkuu;
 
+    /**
+     * Metodi tekee uuden olioilmentymän luokasta Vuoro.
+     *
+     * @param pelaaja Vuoroon asetettava pelaaja
+     */
     public Vuoro(Pelaaja pelaaja) {
         this.pelaaja = pelaaja;
         this.nostetut = new Korttijoukko();
@@ -40,15 +48,18 @@ public class Vuoro {
     /**
      * Metodilla voidaan ottaa vuorossa olevan pelaajan kädestä haluttu kortti.
      *
+     * @throws Exception Kädestä ei voi ottaa korttia, jos kädessä ei ole otettavaa korttia.
+     * 
      * @param kortti Kädestä otettava kortti
      *
+     * @return Kädestä otettu kortti
      */
     public Kortti otaKadesta(Kortti kortti) throws Exception {
         this.laitetut.lisaa(kortti);
         return this.pelaaja.otaKadesta(kortti);
     }
 
-    public boolean jatkuu() {
+    public boolean isJatkuu() {
         return jatkuu;
     }
 

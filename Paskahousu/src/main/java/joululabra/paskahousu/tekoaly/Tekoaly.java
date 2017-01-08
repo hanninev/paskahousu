@@ -6,14 +6,28 @@ import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.sovelluslogiikka.Saannot;
 import joululabra.paskahousu.sovelluslogiikka.Siirtojenkasittelija;
 
+/**
+ * Luokka tarjoaa tekoälyyn liittyviä metodeita.
+ */
 public class Tekoaly {
 
     private Siirtojenkasittelija sk;
 
+    /**
+     * Konstruktori tekee uuden olioilmentymän luokasta Tekoaly.
+     *
+     * @param sk Tekoälyyn liitettävä siirtojenkäsittelijä.
+     */
     public Tekoaly(Siirtojenkasittelija sk) {
         this.sk = sk;
     }
 
+    /**
+     * Metodi valitsee toiminnon.
+     *
+     * @throws Exception Siirtoa ei voida tehdä, jos siirrettävää korttia ei ole
+     * kädessä.
+     */
     public void valitseToiminto() throws Exception {
         try {
             if (Saannot.pakkoNostaaPino(sk.getPino())) {
@@ -35,6 +49,12 @@ public class Tekoaly {
         }
     }
 
+    /**
+     * Metodi laittaa pinoon kortteja.
+     *
+     * @throws Exception Siirtoa ei voida tehdä, jos siirrettävää korttia ei ole
+     * kädessä.
+     */
     public void laitaKortti() throws Exception {
         List<Kortti> kortitKadessa = new ArrayList<>(sk.nykyinenVuoro().getPelaaja().getKasi().getKortit());
 
@@ -47,7 +67,12 @@ public class Tekoaly {
         }
     }
 
-    public boolean kaykoMikaanKortti() throws Exception {
+    /**
+     * Metodi kertoo, käykö mikään kädessä oleva kortti pinoon.
+     * 
+     * @return boolean
+     */
+    public boolean kaykoMikaanKortti() {
         boolean onnistui = false;
 
         for (Kortti kortti : sk.nykyinenVuoro().getPelaaja().getKasi().getKortit()) {

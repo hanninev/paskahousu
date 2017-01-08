@@ -3,10 +3,17 @@ package joululabra.paskahousu.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Luokka tarjoaa korttijoukkoon liittyviä metodeita.
+ */
 public class Korttijoukko {
 
     protected List<Kortti> kortit;
 
+    /**
+     * Metodi tekee uuden olioilmentymän luokasta Korttijoukko.
+     *
+     */
     public Korttijoukko() {
         kortit = new ArrayList<>();
     }
@@ -27,6 +34,8 @@ public class Korttijoukko {
 
     /**
      * Metodi ottaa korttijoukosta halutun kortin.
+     *
+     * @throws Exception Jos haluttua korttia ei ole korttijoukossa
      *
      * @param kortti Otettava kortti
      *
@@ -52,10 +61,20 @@ public class Korttijoukko {
         return kortit.get(kortit.size() - 1);
     }
 
+    /**
+     * Metodi kertoo, onko korttijoukko tyhjä.
+     *
+     * @return boolean
+     */
     public boolean onTyhja() {
         return kortit.isEmpty();
     }
 
+    /**
+     * Metodi kertoo korttijoukon korttien määrän.
+     *
+     * @return korttien määrä
+     */
     public int korttienMaara() {
         return kortit.size();
     }

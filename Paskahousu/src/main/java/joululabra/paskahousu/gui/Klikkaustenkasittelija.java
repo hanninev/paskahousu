@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -75,7 +74,7 @@ public class Klikkaustenkasittelija implements ActionListener {
         if (kortti == null) {
             kortti = new Kortti(Kortti.HERTTA, 0);
         }
-        ImageIcon imageIcon = new ImageIcon(Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
+        ImageIcon imageIcon = new ImageIcon("images/" + Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(100, 145, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);

@@ -2,8 +2,15 @@ package joululabra.paskahousu.domain;
 
 import java.util.Collections;
 
+/**
+ * Luokka tarjoaa pakkaan liittyviä metodeita.
+ */
 public class Pakka extends Korttijoukko {
 
+    /**
+     * Metodi tekee uuden olioilmentymän luokasta Pakka.
+     *
+     */
     public Pakka() {
         luoKortit();
     }
@@ -20,6 +27,10 @@ public class Pakka extends Korttijoukko {
         }
     }
 
+    /**
+     * Metodi sekoittaa pakan kortit.
+     *
+     */
     public void sekoitaKortit() {
         Collections.shuffle(kortit);
     }
@@ -27,6 +38,8 @@ public class Pakka extends Korttijoukko {
     /**
      * Metodi ottaa korttipakasta ensimmäisen kortin.
      *
+     * @throws Exception Pakasta ei voi nostaa korttia, jos pakka on tyhjä.
+     * 
      * @return Pakan ensimmäinen kortti
      */
     public Kortti otaEnsimmainenKortti() throws Exception {

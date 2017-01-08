@@ -5,6 +5,9 @@ import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.domain.Pakka;
 import joululabra.paskahousu.domain.Vuoro;
 
+/**
+ * Luokka tarjoaa metodeja, jotka määrittävät pelin säännöt.
+ */
 public class Saannot {
 
     /**
@@ -45,6 +48,7 @@ public class Saannot {
      * alle viisi korttia.
      *
      * @param vuoro Käsiteltävä vuoro
+     * @param pakka Nykyinen pakka
      *
      * @return boolean
      */

@@ -2,12 +2,21 @@ package joululabra.paskahousu.domain;
 
 import java.util.Objects;
 
+/**
+ * Luokka tarjoaa pelaajaan liittyviä metodeita.
+ */
 public class Pelaaja {
 
     private String nimi;
     private Kasi kasi;
     private boolean tekoaly;
 
+    /**
+     * Metodi tekee uuden olioilmentymän luokasta Pelaaja.
+     *
+     * @param nimi Pelaajan nimi
+     *
+     */
     public Pelaaja(String nimi) {
         this.nimi = nimi;
         this.kasi = new Kasi();
@@ -60,6 +69,9 @@ public class Pelaaja {
      *
      * @param kortti Kädestä otettava kortti
      *
+     * @throws Exception Korttia ei voi ottaa kädestä, jos kädessä ei ole
+     * otettavaa korttia.
+     *
      * @return Kädestä otettu kortti
      */
     public Kortti otaKadesta(Kortti kortti) throws Exception {
@@ -91,6 +103,4 @@ public class Pelaaja {
         return true;
     }
 
-    
-    
 }

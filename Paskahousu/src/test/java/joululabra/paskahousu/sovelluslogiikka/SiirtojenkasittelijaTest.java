@@ -54,7 +54,7 @@ public class SiirtojenkasittelijaTest {
                 peli.getSk().kokeileOnnea();
                 assertEquals(vuoro.getNostetut().korttienMaara(), 1);
                 assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), 5);
-                assertFalse(vuoro.jatkuu());
+                assertFalse(vuoro.isJatkuu());
             }
         }
     }
@@ -69,7 +69,7 @@ public class SiirtojenkasittelijaTest {
                 maara++;
                 assertEquals(vuoro.getPelaaja().getKasi().korttienMaara(), maara);
                 assertTrue(peli.getSk().getPino().onTyhja());
-                assertFalse(vuoro.jatkuu());
+                assertFalse(vuoro.isJatkuu());
             }
         }
     }
@@ -80,7 +80,7 @@ public class SiirtojenkasittelijaTest {
         assertEquals(peli.getSk().getVuorot().get(0).getPelaaja().getKasi().korttienMaara(), 4);
         peli.getSk().nostaPino();
         assertEquals(peli.getSk().getVuorot().get(0).getPelaaja().getKasi().korttienMaara(), 5);
-        assertFalse(peli.getSk().getVuorot().get(0).jatkuu());
+        assertFalse(peli.getSk().getVuorot().get(0).isJatkuu());
     }
 
     @Test

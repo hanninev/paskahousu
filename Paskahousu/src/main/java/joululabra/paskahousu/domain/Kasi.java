@@ -3,6 +3,9 @@ package joululabra.paskahousu.domain;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Luokka tarjoaa pelaajan käteen liittyviä metodeja.
+ */
 public class Kasi extends Korttijoukko {
 
     @Override
