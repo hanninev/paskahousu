@@ -6,7 +6,7 @@ Paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tekoälyä vastaa
 
 [Aiheen kuvaus ja rakenne](dokumentaatio/aiheenmaarittely.md)
 
-[Käyttöohjeet](dokumentaatio/kayttoohje.md)
+[Käyttöohjeet](dokumentaatio/kayttoohjeet.md)
 
 [Tuntikirjanpito](dokumentaatio/tuntikirjanpito.md)
 
