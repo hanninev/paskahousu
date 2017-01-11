@@ -19,7 +19,7 @@ Sovelluslogiikka ja domain-luokat ovat toteutettu siten, että pelissä voisi ol
 * Kädessä olevien korttien tarkastelu
 
 ## Luokkakaavio
-![Luokkakaavio](/dokumentaatio/luokkakaavio2.png)
+![Luokkakaavio](/dokumentaatio/luokkakaavio3.png)
 
 ## Sekvenssikaavioita
 ![Sekvenssikaavio](/dokumentaatio/sekvenssi1.png)
