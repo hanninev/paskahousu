@@ -75,7 +75,7 @@ public class Klikkaustenkasittelija implements ActionListener {
         if (kortti == null) {
             kortti = new Kortti(Kortti.HERTTA, 0);
         }
-        ImageIcon imageIcon = new ImageIcon("images/" + Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
+        ImageIcon imageIcon = new ImageIcon("src/main/java/joululabra/paskahousu/images/" + Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(100, 145, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
