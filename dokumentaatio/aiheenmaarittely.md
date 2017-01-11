@@ -21,6 +21,15 @@ Sovelluslogiikka ja domain-luokat ovat toteutettu siten, että pelissä voisi ol
 ## Luokkakaavio
 ![Luokkakaavio](/dokumentaatio/luokkakaavio3.png)
 
+### Rakennekuvaus
+Peli tuntee suoraan kaikki mukana olevat Pelaajat, mutta Peli tuntee myös Siirtojenkäsittelijan kautta Vuorossa olevan Pelaajan. Vuoroon liittyy tietoja Pelaajan kyseisellä vuorolla tekemistä toiminnoista, joita käytetään esimerkiksi tulostuksiin.
+
+Luokka Siirtojenkäsittelijä tuntee kaikki luokat, joiden välillä liikutellaan kortteja. Siirtojenkasittelija vastaa kortttien liikuttelusta, mutta se tarkistaa ennen siirtoja Saannot-luokalta, onko haluttu siirto sallittu.
+
+Luokat Kasi ja Pakka perivät Korttijoukon, koska ne vaativat lisätoiminnallisuutta. Pakka pitää sekoittaa ja korttien pitää olla järjestettyinä kädessä. Pinolla ei sen sijaan ole mitään lisätoiminnallisuutta verrattuna Kateen ja Pakkaan, joten siksi pino toteuttaa suoraan yläluokan.
+
+Tekoaly käyttää Siirtojenkasittelijan metodeita korttien liikutteluun.
+
 ## Sekvenssikaavioita
 ![Sekvenssikaavio](/dokumentaatio/sekvenssi1.png)
 
