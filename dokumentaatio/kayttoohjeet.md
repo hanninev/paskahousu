@@ -1,3 +1,5 @@
+## Käyttöohjeet
+
 Paskahousua pelataan seuraavilla säännöillä.
 
 * Voittaja on se, jolta loppuu kortit ensimmäisenä.
