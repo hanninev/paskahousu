@@ -48,10 +48,10 @@ public class Siirtojenkasittelija {
      * @return Nykyinen vuoro
      */
     public Vuoro nykyinenVuoro() {
-        if (!vuorot.isEmpty()) {
-            return vuorot.get(vuorot.size() - 1);
+        if (vuorot.isEmpty()) {
+            return null;
         }
-        return null;
+        return vuorot.get(vuorot.size() - 1);
     }
 
     /**
@@ -74,48 +74,30 @@ public class Siirtojenkasittelija {
      */
     public void siirraKorttiPinoon(Kortti kortti) throws Exception {
         if (Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
-            Kortti siirrettava = nykyinenVuoro().otaKadesta(kortti);
-            pino.lisaa(siirrettava);
-            pinoKaatuuJosSaannotSallivat();
+            pino.lisaa(nykyinenVuoro().getPelaaja().otaKadesta(kortti));
+            nykyinenVuoro().laittoiKortinPinoon();
         } else {
             throw new Exception(kortti.toString() + " ei ole sopiva pinoon.");
         }
     }
 
-    /**
-     * Metodi täydentää vuorossa olevan pelaajan käden, jos kädessä on sääntöjen
-     * mukaan liian vähän kortteja.
-     *
-     * @throws Exception Jos siirrettävää korttia ei ole pakassa, ei siirtoa
-     * voida suorittaa.
-     *
-     */
-    public void taydennaKasi() throws Exception {
+    private void taydennaKasi() throws Exception {
         while (Saannot.kadessaLiianVahanKortteja(nykyinenVuoro(), pakka)) {
-            Kortti siirrettava = pakka.otaEnsimmainenKortti();
-            nykyinenVuoro().lisaaKateen(siirrettava);
+            nykyinenVuoro().getPelaaja().lisaaKateen(pakka.otaEnsimmainenKortti());
         }
     }
 
     /**
      * Jos vuorossa oleva pelaaja saa sääntöjen mukaan kokeilla onnea, metodi
-     * nostaa pakasta ensimmäisen kortin ja lisää sen pelaajan käteen. Jos
-     * kortti sopii pinon ylimmäiseksi kortiksi, kortti siirretään pinoon.
-     * Muussa tapauksessa pelaaja joutuu nostamaan pinon.
+     * nostaa pakasta ensimmäisen kortin ja lisää sen pelaajan käteen.
      *
      * @throws Exception Jos siirrettävää korttia ei ole pakassa, ei siirtoa
      * voida suorittaa.
      */
     public void kokeileOnnea() throws Exception {
         if (Saannot.saaKokeillaOnnea(nykyinenVuoro())) {
-            Kortti kortti = pakka.otaEnsimmainenKortti();
-            nykyinenVuoro().lisaaKateen(kortti);
-            if (Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
-                siirraKorttiPinoon(kortti);
-                peli.asetaSeuraavaPelaajaVuoroon();
-            } else {
-                nostaPino();
-            }
+            nykyinenVuoro().getPelaaja().lisaaKateen(pakka.otaEnsimmainenKortti());
+            nykyinenVuoro().setKokeiliOnnea(true);
         }
     }
 
@@ -127,38 +109,45 @@ public class Siirtojenkasittelija {
      */
     public void nostaPino() throws Exception {
         while (!pino.onTyhja()) {
-            Kortti kortti = pino.ota(pino.getKortit().get(0));
-            nykyinenVuoro().lisaaKateen(kortti);
+            nykyinenVuoro().getPelaaja().lisaaKateen(pino.ota(pino.getKortit().get(0)));
         }
-        peli.asetaSeuraavaPelaajaVuoroon();
+        nykyinenVuoro().setNostiPinon(true);
     }
 
-    /**
-     * Metodi kutsuu nostaPino()-metodia, jos pelaajan on sääntöjen mukaan pakko
-     * nostaa pino.
-     *
-     * @throws Exception Korttia ei voida siirtää, jos siirrettävää korttia ei
-     * ole pinossa.
-     */
-    public void nostaPinoJosOnPakko() throws Exception {
-        if (Saannot.pakkoNostaaPino(pino)) {
-            nostaPino();
-        }
-    }
-
-    /**
-     * Metodi siirtää pinossa olevan kortit kaatuneisiin kortteihin, jos säännöt
-     * sallivat.
-     *
-     * @throws Exception Korttia ei voida siirtää, jos siirrettävää korttia ei
-     * ole pinossa.
-     */
-    public void pinoKaatuuJosSaannotSallivat() throws Exception {
+    private void pinoKaatuuJosSaannotSallivat() throws Exception {
         if (Saannot.pinoKaatuu(pino, nykyinenVuoro())) {
             while (!pino.onTyhja()) {
                 Kortti kortti = pino.ota(pino.getKortit().get(0));
             }
-            lisaaVuoro(nykyinenVuoro().getPelaaja());
+            nykyinenVuoro().setKaatoiPinon(true);
+        }
+    }
+
+    /**
+     * Metodi viimeistelee vuoron.
+     *
+     * Jos säännöt sallivat, niin pino kaatuu. Varmistetaan myös, että
+     * pelaajalla on sääntöjen mukaan riittävästi kortteja kädessään.
+     *
+     * @throws Exception Korttia ei voida siirtää, jos siirrettävää korttia ei
+     * ole lähtöjoukossa.
+     */
+    public void valmis() throws Exception {
+        pinoKaatuuJosSaannotSallivat();
+        taydennaKasi();
+    }
+
+    /**
+     * Vuoro siirtyy seuraavalle pelaajalle, ellei nykyinen saa jatkaa.
+     *
+     * Nykyinen pelaaja saa uuden vuoron, jos hän on kaatanut pinon.
+     *
+     */
+    public void vuoronVaihtuminen() {
+        if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
+            peli.getSk().lisaaVuoro(peli.getSk().nykyinenVuoro().getPelaaja());
+        } else {
+            peli.asetaSeuraavaPelaajaVuoroon();
         }
     }
 }

@@ -6,57 +6,69 @@ package joululabra.paskahousu.domain;
 public class Vuoro {
 
     private Pelaaja pelaaja;
-    private Korttijoukko nostetut;
-    private Korttijoukko laitetut;
+    private int laitettuPinoon;
     private boolean jatkuu;
+    private boolean kokeiliOnnea;
+    private boolean nostiPinon;
+    private boolean kaatoiPinon;
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Vuoro.
+     * Konstruktori tekee uuden olioilmentymän luokasta Vuoro.
      *
      * @param pelaaja Vuoroon asetettava pelaaja
      */
     public Vuoro(Pelaaja pelaaja) {
         this.pelaaja = pelaaja;
-        this.nostetut = new Korttijoukko();
-        this.laitetut = new Korttijoukko();
+        this.laitettuPinoon = 0;
         this.jatkuu = true;
+        this.kokeiliOnnea = false;
+        this.nostiPinon = false;
+        this.kaatoiPinon = false;
     }
 
     public Pelaaja getPelaaja() {
         return pelaaja;
     }
 
-    public Korttijoukko getNostetut() {
-        return nostetut;
+    public void setKaatoiPinon(boolean kaatoiPinon) {
+        this.kaatoiPinon = kaatoiPinon;
     }
 
-    public Korttijoukko getLaitetut() {
-        return laitetut;
+    public boolean isKokeiliOnnea() {
+        return kokeiliOnnea;
+    }
+
+    public void setNostiPinon(boolean nostiPinon) {
+        this.nostiPinon = nostiPinon;
+    }
+
+    public void setKokeiliOnnea(boolean kokeiliOnnea) {
+        this.kokeiliOnnea = kokeiliOnnea;
+    }
+
+    public boolean isKaatoiPinon() {
+        return kaatoiPinon;
+    }
+
+    public boolean isNostiPinon() {
+        return nostiPinon;
+    }
+
+    public void setLaitettuPinoon(int laitettuPinoon) {
+        this.laitettuPinoon = laitettuPinoon;
     }
 
     /**
-     * Metodilla voidaan lisätä vuorossa olevan pelaajan käteen haluttu kortti.
-     *
-     * @param kortti Käteen lisättävä kortti
+     * Metodi lisää pinoon laitetusta kortista tiedon oliomuuttujaan
+     * laitettuPinoon.
      *
      */
-    public void lisaaKateen(Kortti kortti) {
-        this.nostetut.lisaa(kortti);
-        this.pelaaja.lisaaKateen(kortti);
+    public void laittoiKortinPinoon() {
+        this.laitettuPinoon++;
     }
 
-    /**
-     * Metodilla voidaan ottaa vuorossa olevan pelaajan kädestä haluttu kortti.
-     *
-     * @throws Exception Kädestä ei voi ottaa korttia, jos kädessä ei ole otettavaa korttia.
-     * 
-     * @param kortti Kädestä otettava kortti
-     *
-     * @return Kädestä otettu kortti
-     */
-    public Kortti otaKadesta(Kortti kortti) throws Exception {
-        this.laitetut.lisaa(kortti);
-        return this.pelaaja.otaKadesta(kortti);
+    public int getLaitettuPinoon() {
+        return laitettuPinoon;
     }
 
     public boolean isJatkuu() {

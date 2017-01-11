@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import joululabra.paskahousu.domain.Kortti;
+import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
 import joululabra.paskahousu.sovelluslogiikka.Saannot;
 
@@ -97,93 +98,99 @@ public class Klikkaustenkasittelija implements ActionListener {
 
             if (ae.getSource() == kokeileOnnea) {
                 peli.getSk().kokeileOnnea();
-                if (peli.getSk().nykyinenVuoro().getNostetut().getKortit().size() > 1) {
-                    sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getNostetut().getKortit().get(0) + ". Kortti ei käynyt pinoon, joten jouduit nostamaan pinon.<br>");
-                } else {
-                    sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getNostetut().getKortit().get(0) + ". Sinulla kävi onni. Kortti oli sopiva pinoon.<br>");
-                }
-                kasitteleVuoro();
+                kokeileOnnea.setEnabled(false);
+                valmis.setEnabled(false);
+                sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getPelaaja().getKasi().viimeisinKortti().toString() + ". <br>Jos mikään kortti ei käy pinoon, sinun on pakko nostaa pino.");
             } else if (ae.getSource() == nostaPino) {
                 peli.getSk().nostaPino();
-                kasitteleVuoro();
+                sb.append("Nostit pinon. Vuoro siirtyy vastustajalle.<br>");
+                kasittelePainikkeet();
             } else if (ae.getSource() == valmis) {
-                peli.getSk().taydennaKasi();
-                peli.asetaSeuraavaPelaajaVuoroon();
-                kasitteleVuoro();
+                peli.getSk().valmis();
+                if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
+                    sb.append("Kaadoit pinon. Saat uuden vuoron.<br>");
+                }
+                kasittelePainikkeet();
             }
 
+            paivitaViestikentta();
             paivitaNakyma();
 
         } catch (Exception e) {
-            viestikentta.setText("<html><br><br><br><center>" + e.getMessage() + "</center></html>");
+            sb.append(e.getMessage().toString());
+            paivitaViestikentta();
         }
     }
 
-    public void paivitaPainikkeetJaViestikentta() {
-        this.kokeileOnnea.repaint();
-        this.nostaPino.repaint();
-        this.viestikentta.repaint();
-        this.valmis.repaint();
+    private void paivitaViestikentta() {
+        viestikentta.setText("<html><br><br><br><center>" + sb.toString() + "</center></html>");
     }
 
-    public void kasitteleVuoro() throws Exception {
+    public void kasittelePainikkeet() throws Exception {
         if (!peli.peliJatkuu()) {
-            sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " hävisi!<br>");
-            valmis.setEnabled(false);
-            kokeileOnnea.setEnabled(false);
-            nostaPino.setEnabled(false);
-            kortitKadessa.setEnabled(false);
+            ilmoitaPelinPaattyminen();
         } else {
-
-            if (Saannot.pakkoNostaaPino(peli.getSk().getPino())) {
-                if (peli.getSk().nykyinenVuoro().getPelaaja().equals(peli.getPelaajat().get(0))) {
-                    sb.append("Sinä jouduit nostamaan kortin.<br>");
-                } else {
-                    sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi() + " joutui nostamaan kortin.<br>");
-                }
-                peli.getSk().nostaPino();
-                kortitKadessa.setEnabled(false);
-                kokeileOnnea.setEnabled(false);
-                nostaPino.setEnabled(true);
-            }
-
+            peli.getSk().vuoronVaihtuminen();
+            paivitaViestikentta();
             valmis.setEnabled(false);
-            kokeileOnnea.setEnabled(true);
-            nostaPino.setEnabled(true);
-
-            if ((peli.getSk().getPakka().onTyhja()) || (!Saannot.saaKokeillaOnnea(peli.getSk().nykyinenVuoro()))) {
-                kokeileOnnea.setEnabled(false);
-            }
-            if (peli.getSk().getPino().onTyhja()) {
-                nostaPino.setEnabled(false);
-            }
-
-            paivitaNakyma();
-
-            if (!peli.getSk().nykyinenVuoro().getPelaaja().isTekoaly()) {
-                return;
-            }
-            vastustajaSiirtaa();
         }
+
+        valmis.setEnabled(false);
+        kokeileOnnea.setEnabled(true);
+        nostaPino.setEnabled(true);
+
+        if ((peli.getSk().getPakka().onTyhja()) || (!Saannot.saaKokeillaOnnea(peli.getSk().nykyinenVuoro()))) {
+            kokeileOnnea.setEnabled(false);
+        }
+        if (peli.getSk().getPino().onTyhja()) {
+            nostaPino.setEnabled(false);
+        }
+
+        paivitaNakyma();
+
+        if (!peli.getSk().nykyinenVuoro().getPelaaja().isTekoaly()) {
+            sb.append("Sinun vuorosi.<br>");
+            paivitaViestikentta();
+            return;
+        }
+        vastustajaSiirtaa();
+    }
+
+    private void ilmoitaPelinPaattyminen() {
+        sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " voitti!<br>");
+        valmis.setEnabled(false);
+        kokeileOnnea.setEnabled(false);
+        nostaPino.setEnabled(false);
+        kortitKadessa.setEnabled(false);
     }
 
     public void vastustajaSiirtaa() throws Exception {
         Integer pinonKoko = peli.getSk().getPino().korttienMaara();
-        peli.getTekoaly().valitseToiminto();
-        if ((peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == pinonKoko) && (pinonKoko != 0)) {
-            sb.append("Vastustaja nosti pinon. ");
-        } else if (peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == 1) {
-            sb.append("Vastustaja kokeili onneaan ja kortti oli sopiva. <br>");
-        } else if (peli.getSk().nykyinenVuoro().getNostetut().korttienMaara() == 1 + pinonKoko) {
-            sb.append("Vastustaja kokeili onneaan ja joutui nostamaan pinon. <br>");
+        Korttijoukko lisatyt = peli.getTekoaly().valitseToiminto();
+        peli.getSk().valmis();
+        if (peli.getSk().nykyinenVuoro().getLaitettuPinoon() != 0) {
+            sb.append("Vastustaja laittoi pinoon " + lisatyt.toString() + " <br>");
         }
-        if (!peli.getSk().nykyinenVuoro().getLaitetut().onTyhja()) {
-            sb.append("Vastustaja laittoi pinoon kortit: " + peli.getSk().nykyinenVuoro().getLaitetut().getKortit() + " <br>");
+        tekstitVastustajanTekemisesta(pinonKoko);
+
+        paivitaViestikentta();
+        kasittelePainikkeet();
+    }
+
+    private void tekstitVastustajanTekemisesta(Integer pinonKoko) {
+
+        if (peli.getSk().nykyinenVuoro().isNostiPinon()) {
+            sb.append("Vastustaja nosti pinon. <br>");
+        } else if (peli.getSk().nykyinenVuoro().isKokeiliOnnea()) {
+            sb.append("Vastustaja kokeili onneaan, ja hän ");
+            if (peli.getSk().getPino().korttienMaara() >= pinonKoko + 1) {
+                sb.append("laittoi pinoon sopivan kortin.<br>");
+            } else {
+                sb.append("joutui nostamaan pinon.<br>");
+            }
         }
-        sb.append("Sinun vuorosi.");
-        viestikentta.setText("<html><br><center>" + sb.toString() + "</center></html>");
-        peli.getSk().taydennaKasi();
-        peli.asetaSeuraavaPelaajaVuoroon();
-        kasitteleVuoro();
+        if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
+            sb.append("Vastustaja kaatoi pinon ja sai uuden vuoron.<br>");
+        }
     }
 }

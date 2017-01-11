@@ -44,25 +44,7 @@ public class TekoalyTest {
         peli.getSk().lisaaVuoro(vastustaja);
         peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 7));
         peli.getSk().lisaaVuoro(pelaaja);
-        assertTrue(peli.getTekoaly().kaykoMikaanKortti());
-        peli.getTekoaly().laitaKortti();
+        peli.getTekoaly().valitseToiminto();
         assertEquals(peli.getSk().getPino().korttienMaara(), 3);
-        peli.getSk().lisaaVuoro(vastustaja);
-        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 12));
-        peli.getSk().lisaaVuoro(pelaaja);
-        assertTrue(peli.getTekoaly().kaykoMikaanKortti());
-        peli.getSk().lisaaVuoro(vastustaja);
-        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 13));
-        peli.getSk().lisaaVuoro(pelaaja);
-        assertFalse(peli.getTekoaly().kaykoMikaanKortti());
-    }
-
-    @Test
-    public void testValitseToiminto() throws Exception {
-        peli.getSk().lisaaVuoro(vastustaja);
-        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 14));
-        peli.getSk().lisaaVuoro(pelaaja);
-        tekoaly.valitseToiminto();
-        assertEquals(pelaaja.getKasi().getKortit().size(), 6);
     }
 }

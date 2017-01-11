@@ -3,6 +3,7 @@ package joululabra.paskahousu.tekoaly;
 import java.util.ArrayList;
 import java.util.List;
 import joululabra.paskahousu.domain.Kortti;
+import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.sovelluslogiikka.Saannot;
 import joululabra.paskahousu.sovelluslogiikka.Siirtojenkasittelija;
 
@@ -23,56 +24,66 @@ public class Tekoaly {
     }
 
     /**
-     * Metodi valitsee toiminnon.
+     * Metodi valitsee vastustajan suorittaman toiminnon.
+     * 
+     * @return pinoon laitetut kortit
      *
      * @throws Exception Siirtoa ei voida tehdä, jos siirrettävää korttia ei ole
-     * kädessä.
+     * vastustajan kädessä.
      */
-    public void valitseToiminto() throws Exception {
+    public Korttijoukko valitseToiminto() throws Exception {
+        Korttijoukko lisatyt = new Korttijoukko();
         try {
-            if (Saannot.pakkoNostaaPino(sk.getPino())) {
+            if (sk.getPakka().onTyhja() && !kaykoMikaanKortti()) {
                 sk.nostaPino();
-                return;
             }
 
             if (!kaykoMikaanKortti()) {
                 sk.kokeileOnnea();
-            } else if (kaykoMikaanKortti()) {
+            }
+
+            if (kaykoMikaanKortti()) {
                 while (kaykoMikaanKortti()) {
-                    laitaKortti();
+                    return laitaKortti();
                 }
             } else {
                 sk.nostaPino();
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
+
+        return lisatyt;
     }
 
-    /**
-     * Metodi laittaa pinoon kortteja.
-     *
-     * @throws Exception Siirtoa ei voida tehdä, jos siirrettävää korttia ei ole
-     * kädessä.
-     */
-    public void laitaKortti() throws Exception {
+    private Korttijoukko laitaKortti() throws Exception {
         List<Kortti> kortitKadessa = new ArrayList<>(sk.nykyinenVuoro().getPelaaja().getKasi().getKortit());
+        Korttijoukko lisatyt = new Korttijoukko();
 
         for (Kortti kortti : kortitKadessa) {
             if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
-                if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
+                if ((Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) && kortti.getArvo() != 2) {
                     sk.siirraKorttiPinoon(kortti);
+                    lisatyt.lisaa(kortti);
                 }
             }
         }
+
+        if (lisatyt.onTyhja()) {
+            for (Kortti kortti : kortitKadessa) {
+                if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
+                    if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
+                        sk.siirraKorttiPinoon(kortti);
+                        lisatyt.lisaa(kortti);
+                    }
+                }
+            }
+        }
+        return lisatyt;
     }
 
-    /**
-     * Metodi kertoo, käykö mikään kädessä oleva kortti pinoon.
-     * 
-     * @return boolean
-     */
-    public boolean kaykoMikaanKortti() {
+    private boolean kaykoMikaanKortti() {
         boolean onnistui = false;
 
         for (Kortti kortti : sk.nykyinenVuoro().getPelaaja().getKasi().getKortit()) {

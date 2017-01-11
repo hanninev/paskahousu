@@ -46,7 +46,7 @@ public class Korttijoukko {
             kortit.remove(kortti);
             return kortti;
         }
-        throw new Exception("Korttia ei löytynyt tästä korttijoukosta");
+        throw new Exception("Korttia ei löytynyt tästä lähtöjoukosta");
     }
 
     /**
@@ -79,4 +79,24 @@ public class Korttijoukko {
         return kortit.size();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (kortit.size() == 1) {
+            sb.append("kortin " + kortit.get(0));
+        } else {
+            sb.append("kortit ");
+
+            for (int i = 0; i < kortit.size(); i++) {
+                if (i == kortit.size() - 1) {
+                    sb.append(kortit.get(i).toString());
+                } else if (i == kortit.size() - 2) {
+                    sb.append(kortit.get(i).toString() + " ja ");
+                } else {
+                    sb.append(kortit.get(i).toString() + ", ");
+                }
+            }
+        }
+        return sb.toString();
+    }
 }

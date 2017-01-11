@@ -6,38 +6,23 @@ import joululabra.paskahousu.domain.Pakka;
 import joululabra.paskahousu.domain.Vuoro;
 
 /**
- * Luokka tarjoaa metodeja, jotka määrittävät pelin säännöt.
+ * Luokka tarjoaa boolean-arvon palauttavia metodeja, jotka määrittävät pelin
+ * säännöt.
  */
 public class Saannot {
-
-    /**
-     * Metodi kertoo, että pelaaja joutuu aina nostamaan pinon.
-     *
-     * Pelaaja joutuu aina nostamaan pinon, jos pinossa on tasan yksi kortti ja
-     * pinon ylimmän kortin arvo on 10 tai 14 (ässä).
-     *
-     * @param pino Nykyinen pino
-     *
-     * @return boolean
-     */
-    public static boolean pakkoNostaaPino(Korttijoukko pino) {
-        return ((pino.korttienMaara() == 1)
-                && ((pino.viimeisinKortti().getArvo() == 10)
-                || (pino.viimeisinKortti().getArvo() == 14)));
-    }
 
     /**
      * Metodi kertoo, saako pelaaja kokeilla onneaan pakasta.
      *
      * Pelaaja saa kokeilla onneaan pakasta, jos ei ole saman vuoron aikana
-     * nostanut kortteja pakasta tai laittanut kortteja pinoon.
+     * nostanut kortteja pakasta, nostanut pinoa tai laittanut kortteja pinoon.
      *
      * @param vuoro Käsiteltävä vuoro
      *
      * @return boolean
      */
     public static boolean saaKokeillaOnnea(Vuoro vuoro) {
-        return ((vuoro.getNostetut().onTyhja()) && (vuoro.getLaitetut().onTyhja()));
+        return ((vuoro.getLaitettuPinoon() == 0) && (!vuoro.isKokeiliOnnea()) && (!vuoro.isNostiPinon()));
     }
 
     /**
@@ -59,8 +44,7 @@ public class Saannot {
     /**
      * Metodi kertoo, jos pino kaatuu.
      *
-     * Jos pinossa olevien korttien määrä on enemmän kuin yksi ja pinon
-     * viimeisimmän kortin arvo on 10 tai 14 (ässä), pino kaatuu.
+     * Jos pinon ylimmän kortin arvo on 10 tai 14 (ässä), pino kaatuu.
      *
      * @param pino Nykyinen pino
      * @param vuoro Käsiteltävä vuoro
@@ -68,9 +52,12 @@ public class Saannot {
      * @return boolean
      */
     public static boolean pinoKaatuu(Korttijoukko pino, Vuoro vuoro) {
-        return ((pino.korttienMaara() > 1)
-                && ((pino.viimeisinKortti().getArvo() == 10)
-                || (pino.viimeisinKortti().getArvo() == 14)));
+        if (pino.onTyhja()) {
+            return false;
+        }
+
+        return ((pino.viimeisinKortti().getArvo() == 10)
+                || (pino.viimeisinKortti().getArvo() == 14));
     }
 
     /**
@@ -80,6 +67,16 @@ public class Saannot {
      * vuoron ensimmäiseen siirtoon liittyviä sääntöjä. Muussa tapauksessa
      * lisättävän kortin arvon tulee olla sama kuin edellisen kortin arvo.
      *
+     * Vuoron ensimmäinen siirto sopii aina pinoon, jos lisättävän kortin arvo
+     * on 2 tai jos sekä pakka että pino ovat tyhjiä.
+     *
+     * Jos pakassa on kortteja, mutta pino on tyhjä, sopii tyhjään pinoon
+     * kortit, joiden arvo on pienempi kuin 11 (jätkä) tai tasan 14 (ässä).
+     *
+     * Jos sekä pakassa että pinossa on kortteja ja pinon ylin kortti ei ole
+     * arvoltaan 2, pinoon sopii kaikki kortit, joiden arvo on yhtä suuri tai
+     * suurempi kuin pinon ylin kortti.
+     *
      * @param pino Nykyinen pino
      * @param vuoro Käsiteltävä vuoro
      * @param kortti Kokeiltava kortti
@@ -88,33 +85,14 @@ public class Saannot {
      * @return boolean
      */
     public static boolean korttiSopii(Korttijoukko pino, Pakka pakka, Vuoro vuoro, Kortti kortti) {
-        if (vuoro.getLaitetut().onTyhja()) {
+        if (vuoro.getLaitettuPinoon() == 0) {
             return vuoronEnsimmainenSiirtoOk(pakka, pino, kortti);
         } else {
-            return vuoronToinenTaiUseampiSiirtoOk(vuoro, kortti);
+            return vuoronToinenTaiUseampiSiirtoOk(pino, kortti);
         }
     }
 
-    /**
-     * Metodi kertoo, sopiiko vuoron ensimmäisenä siirrettävä kortti pinoon.
-     *
-     * Vuoron ensimmäinen siirto sopii aina pinoon, jos lisättävän kortin arvo
-     * on 2 tai jos sekä pakka että pino ovat tyhjiä.
-     *
-     * Jos pakassa on kortteja, mutta pino on tyhjä, sopii tyhjään pinoon
-     * kortit, joiden arvo on pienempi kuin 11 (jätkä) tai tasan 14 (ässä).
-     *
-     * Jos sekä pakassa että pinossa on kortteja ja pinon viimeisin kortti ei
-     * ole arvoltaan 2, pinoon sopii kaikki kortit, joiden arvo on yhtä suuri
-     * tai suurempi kuin pinon ylin kortti.
-     *
-     * @param pino Nykyinen pino
-     * @param kortti Kokeiltava kortti
-     * @param pakka Nykyinen pakka
-     *
-     * @return boolean
-     */
-    public static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) {
+    private static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) {
         if (kortti.getArvo() == 2) {
             return true;
         }
@@ -133,16 +111,7 @@ public class Saannot {
         return false;
     }
 
-    /**
-     * Metodi kertoo, sopiiko saman vuoron aikana laitettu seuraava kortti
-     * pakkaan, jos vuoron ensimmäinen kortti on laitettu.
-     *
-     * @param vuoro Käsiteltävä vuoro
-     * @param kortti Kokeiltava kortti
-     *
-     * @return boolean
-     */
-    public static boolean vuoronToinenTaiUseampiSiirtoOk(Vuoro vuoro, Kortti kortti) {
-        return ((vuoro.getLaitetut().getKortit().get(0).getArvo() == kortti.getArvo()) && (kortti.getArvo() != 2) && (kortti.getArvo() != 10) && (kortti.getArvo() != 14));
+    private static boolean vuoronToinenTaiUseampiSiirtoOk(Korttijoukko pino, Kortti kortti) {
+        return ((pino.viimeisinKortti().getArvo() == kortti.getArvo()) && (kortti.getArvo() != 2) && (kortti.getArvo() != 10) && (kortti.getArvo() != 14));
     }
 }

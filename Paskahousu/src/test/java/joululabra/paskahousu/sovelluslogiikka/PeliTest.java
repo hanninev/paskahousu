@@ -56,4 +56,16 @@ public class PeliTest {
                 && (sekoittamaton.getKortit().get(2) == peli.getSk().getPakka().getKortit().get(2))
                 && (sekoittamaton.getKortit().get(3) == peli.getSk().getPakka().getKortit().get(3)));
     }
+
+    @Test
+    public void testAsetaSeuraavaPelaajaVuoroon() {
+        peli.getSk().lisaaVuoro(peli.getPelaajat().get(0));
+        assertEquals(peli.getSk().nykyinenVuoro().getPelaaja(), peli.getPelaajat().get(0));
+        for (int i = 0; i < 5; i++) {
+            peli.asetaSeuraavaPelaajaVuoroon();
+            assertFalse(peli.getSk().getVuorot().get(i).isJatkuu());
+            assertEquals(peli.getSk().nykyinenVuoro().getPelaaja(), peli.getSk().getVuorot().get(i + 1).getPelaaja());
+            assertTrue(peli.getSk().getVuorot().get(i + 1).isJatkuu());
+        }
+    }
 }
