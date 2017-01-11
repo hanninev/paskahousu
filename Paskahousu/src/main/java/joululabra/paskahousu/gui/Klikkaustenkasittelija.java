@@ -130,6 +130,7 @@ public class Klikkaustenkasittelija implements ActionListener {
     public void kasittelePainikkeet() throws Exception {
         if (!peli.peliJatkuu()) {
             ilmoitaPelinPaattyminen();
+            return;
         } else {
             peli.getSk().vuoronVaihtuminen();
             paivitaViestikentta();
