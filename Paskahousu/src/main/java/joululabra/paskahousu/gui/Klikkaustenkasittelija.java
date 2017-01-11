@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.plaf.basic.BasicBorders;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
@@ -75,7 +76,7 @@ public class Klikkaustenkasittelija implements ActionListener {
         if (kortti == null) {
             kortti = new Kortti(Kortti.HERTTA, 0);
         }
-        ImageIcon imageIcon = new ImageIcon("src/main/java/joululabra/paskahousu/images/" + Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png");
+        ImageIcon imageIcon = new ImageIcon(Klikkaustenkasittelija.class.getResource("images/" + Kortti.MAAT[kortti.getMaa()].toLowerCase() + kortti.getArvo() + ".png"));
         Image image = imageIcon.getImage();
         Image newimg = image.getScaledInstance(100, 145, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newimg);
