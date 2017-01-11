@@ -14,3 +14,4 @@ Päivä | Tunnit | Kuvaus
 06.01.2017 | 6h | Käyttöliittymän ohjelmointia
 06.01.2017 | 3h | Käyttöliittymän ohjelmointia
 08.01.2017 | 4h | Javadocien ja sekvenssikaavioiden tekoa sekä luokkakaavion päivitys
+11.01.2017 | 5h | Bugien korjailua ja ohjelmointia.
