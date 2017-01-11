@@ -1,7 +1,7 @@
 Paskahousua pelataan seuraavilla säännöillä.
 
 * Voittaja on se, jolta loppuu kortit ensimmäisenä.
-* Sinä aloitat. Valitse pinoon laitettavat kortit. Voit laittaa vuorollasi pinoon useamman saman arvoisen kortin. 
+* Sinä aloitat. Valitse pinoon laitettavat kortit klikkaamalla niitä. Et voi perua valintaasi. Voit laittaa vuorollasi pinoon useamman saman arvoisen kortin. 
 * Kun olet valinnut kortit, klikkaa nappia "valmis".
 * Voit kokeilla kerran onneasi pakasta, jolloin käteesi lisätään kortti. Tämän jälkeen voit yhä laittaa pinoon minkä tahansa kädessä olevistasi korteista. Jos tämän jälkeen mikään korttisi ei sovi pinoon, sinun on pakko nostaa pino itsellesi.
 * Jos nostat pinon, menetet vuorosi.
