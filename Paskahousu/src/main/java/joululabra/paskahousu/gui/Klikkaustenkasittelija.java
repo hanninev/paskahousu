@@ -181,16 +181,17 @@ public class Klikkaustenkasittelija implements ActionListener {
 
     private void tekstitVastustajanTekemisesta(Integer pinonKoko) {
 
-        if (peli.getSk().nykyinenVuoro().isNostiPinon()) {
-            sb.append("Vastustaja nosti pinon. <br>");
-        } else if (peli.getSk().nykyinenVuoro().isKokeiliOnnea()) {
+        if (peli.getSk().nykyinenVuoro().isKokeiliOnnea()) {
             sb.append("Vastustaja kokeili onneaan, ja hän ");
             if (peli.getSk().getPino().korttienMaara() >= pinonKoko + 1) {
                 sb.append("laittoi pinoon sopivan kortin.<br>");
             } else {
                 sb.append("joutui nostamaan pinon.<br>");
             }
+        } else if (peli.getSk().nykyinenVuoro().isNostiPinon()) {
+            sb.append("Vastustaja nosti pinon. <br>");
         }
+
         if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
             sb.append("Vastustaja kaatoi pinon ja sai uuden vuoron.<br>");
         }
