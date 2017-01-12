@@ -82,9 +82,7 @@ public class Korttijoukko {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (kortit.isEmpty()) {
-            sb.append("ei ainuttakaan korttia.");
-        } else if (kortit.size() == 1) {
+        if (kortit.size() == 1) {
             sb.append("kortin " + kortit.get(0));
         } else {
             sb.append("kortit ");

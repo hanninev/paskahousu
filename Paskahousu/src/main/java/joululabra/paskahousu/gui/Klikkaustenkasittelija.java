@@ -65,7 +65,8 @@ public class Klikkaustenkasittelija implements ActionListener {
         kortitKadessa.validate();
         kortitKadessa.repaint();
 
-        vastustaja.setText("<html>" + peli.getPelaajat().get(1).getNimi() + ", kortteja kädessä " + peli.getPelaajat().get(1).getKasi().korttienMaara() + "<br><br>Tässä myös vastustajan kortit<br>testauksen helpottamiseksi:<br>" + peli.getPelaajat().get(1).getKasi().getKortit() + "</html>");
+        vastustaja.setText("<html>" + peli.getPelaajat().get(1).getNimi() + ", kortteja kädessä " + peli.getPelaajat().get(1).getKasi().korttienMaara());
+   //             + "<br><br>Tässä myös vastustajan kortit<br>testauksen helpottamiseksi:<br>" + peli.getPelaajat().get(1).getKasi().getKortit() + "</html>");
         pino.setText("Pinossa " + peli.getSk().getPino().korttienMaara() + " korttia.");
         pino.setIcon(haeKortinKuvaJaMuunnaKoko(peli.getSk().getPino().viimeisinKortti()));
         pino.setHorizontalTextPosition(JLabel.CENTER);
