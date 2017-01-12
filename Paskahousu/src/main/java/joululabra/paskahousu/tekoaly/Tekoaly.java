@@ -8,7 +8,7 @@ import joululabra.paskahousu.sovelluslogiikka.Saannot;
 import joululabra.paskahousu.sovelluslogiikka.Siirtojenkasittelija;
 
 /**
- * Luokka tarjoaa tekoälyyn liittyviä metodeita.
+ * Luokka tarjoaa tekoälyä käyttävän pelaajan toimintoihin liittyviä metodeita.
  */
 public class Tekoaly {
 
@@ -25,7 +25,7 @@ public class Tekoaly {
 
     /**
      * Metodi valitsee vastustajan suorittaman toiminnon.
-     * 
+     *
      * @return pinoon laitetut kortit
      *
      * @throws Exception Siirtoa ei voida tehdä, jos siirrettävää korttia ei ole

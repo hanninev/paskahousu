@@ -7,11 +7,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.plaf.basic.BasicBorders;
+import javax.swing.SwingConstants;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
@@ -28,7 +29,7 @@ public class Klikkaustenkasittelija implements ActionListener {
     private JLabel vastustaja;
     private JLabel pino;
     private JLabel pakka;
-    private Map<JButton, Kortti> buttonitJaKortit;
+    private Map<JButton, Kortti> painikkeetJaKortit;
     private StringBuilder sb;
 
     public Klikkaustenkasittelija(Peli peli, JLabel vastustaja, JLabel pino, JLabel pakka, JPanel kortitKadessa, JButton kokeileOnnea, JButton nostaPino, JButton valmis, JLabel viestikentta) {
@@ -41,24 +42,26 @@ public class Klikkaustenkasittelija implements ActionListener {
         this.vastustaja = vastustaja;
         this.pino = pino;
         this.pakka = pakka;
-        this.buttonitJaKortit = new HashMap<>();
+        this.painikkeetJaKortit = new HashMap<>();
         paivitaNakyma();
     }
 
     public void paivitaNakyma() {
-        buttonitJaKortit.clear();
+        painikkeetJaKortit.clear();
         kortitKadessa.removeAll();
 
         for (Kortti kortti : peli.getPelaajat().get(0).getKasi().getKortit()) {
             ImageIcon imageIcon = haeKortinKuvaJaMuunnaKoko(kortti);
-            JButton korttiButton = new JButton(imageIcon);
-            korttiButton.setBackground(Color.WHITE);
-            korttiButton.addActionListener(this);
-            buttonitJaKortit.put(korttiButton, kortti);
-            kortitKadessa.add(korttiButton);
+            JButton korttiPainike = new JButton(imageIcon);
+            korttiPainike.setHorizontalAlignment(SwingConstants.LEFT);
+            korttiPainike.setBackground(Color.WHITE);
+            korttiPainike.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+            korttiPainike.addActionListener(this);
+            painikkeetJaKortit.put(korttiPainike, kortti);
+            kortitKadessa.add(korttiPainike);
         }
 
-        kortitKadessa.setLayout(new GridLayout(1, buttonitJaKortit.size()));
+        kortitKadessa.setLayout(new GridLayout(1, painikkeetJaKortit.size()));
         kortitKadessa.validate();
         kortitKadessa.repaint();
 
@@ -88,9 +91,9 @@ public class Klikkaustenkasittelija implements ActionListener {
         try {
             sb = new StringBuilder();
 
-            for (JButton jbutton : buttonitJaKortit.keySet()) {
+            for (JButton jbutton : painikkeetJaKortit.keySet()) {
                 if (ae.getSource() == (JButton) jbutton) {
-                    peli.getSk().siirraKorttiPinoon(buttonitJaKortit.get(jbutton));
+                    peli.getSk().siirraKorttiPinoon(painikkeetJaKortit.get(jbutton));
                     valmis.setEnabled(true);
                     kokeileOnnea.setEnabled(false);
                     nostaPino.setEnabled(false);
@@ -104,7 +107,7 @@ public class Klikkaustenkasittelija implements ActionListener {
                 sb.append("Sait pakasta kortin " + peli.getSk().nykyinenVuoro().getPelaaja().getKasi().viimeisinKortti().toString() + ". <br>Jos mikään kortti ei käy pinoon, sinun on pakko nostaa pino.");
             } else if (ae.getSource() == nostaPino) {
                 peli.getSk().nostaPino();
-                sb.append("Nostit pinon. Vuoro siirtyy vastustajalle.<br>");
+                sb.append("Nostit pinon. Vuoro siirtyi vastustajalle.<br>");
                 kasittelePainikkeet();
             } else if (ae.getSource() == valmis) {
                 peli.getSk().valmis();
@@ -124,7 +127,7 @@ public class Klikkaustenkasittelija implements ActionListener {
     }
 
     private void paivitaViestikentta() {
-        viestikentta.setText("<html><br><br><br><center>" + sb.toString() + "</center></html>");
+        viestikentta.setText("<html><br><br><center>" + sb.toString() + "</center></html>");
     }
 
     public void kasittelePainikkeet() throws Exception {
@@ -134,7 +137,6 @@ public class Klikkaustenkasittelija implements ActionListener {
         } else {
             peli.getSk().vuoronVaihtuminen();
             paivitaViestikentta();
-            valmis.setEnabled(false);
         }
 
         valmis.setEnabled(false);
@@ -146,6 +148,10 @@ public class Klikkaustenkasittelija implements ActionListener {
         }
         if (peli.getSk().getPino().onTyhja()) {
             nostaPino.setEnabled(false);
+        }
+        if ((peli.getSk().getPino().onTyhja()) && (!peli.getSk().getPakka().onTyhja()) && (peli.getSk().nykyinenVuoro().getPelaaja().pieninKortti().getArvo() >= 11) && (peli.getSk().nykyinenVuoro().getPelaaja().suurinKortti().getArvo() < 14)) {
+            toiminnanTeksti("Pakkaa on jäljellä, joten mikään kädessä olevista korteistasi ei sovi tyhjään pöytään.<br>Voit luopua vuorostasi tai kokeilla onneasi pakasta, jos et jo tehnyt sitä.<br>", "");
+            valmis.setEnabled(true);
         }
 
         paivitaNakyma();
@@ -159,7 +165,7 @@ public class Klikkaustenkasittelija implements ActionListener {
     }
 
     private void ilmoitaPelinPaattyminen() {
-        sb.append(peli.getSk().nykyinenVuoro().getPelaaja().getNimi().toString() + " voitti!<br>");
+        toiminnanTeksti("Sinä voitit, onnea!", "Vastustaja voitti!");
         valmis.setEnabled(false);
         kokeileOnnea.setEnabled(false);
         nostaPino.setEnabled(false);
@@ -194,6 +200,14 @@ public class Klikkaustenkasittelija implements ActionListener {
 
         if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
             sb.append("Vastustaja kaatoi pinon ja sai uuden vuoron.<br>");
+        }
+    }
+
+    private void toiminnanTeksti(String kayttaja, String vastustaja) {
+        if (peli.getSk().nykyinenVuoro().getPelaaja().equals(peli.getPelaajat().get(0))) {
+            sb.append(kayttaja);
+        } else if (peli.getSk().nykyinenVuoro().getPelaaja().equals(peli.getPelaajat().get(1))) {
+            sb.append(vastustaja);
         }
     }
 }

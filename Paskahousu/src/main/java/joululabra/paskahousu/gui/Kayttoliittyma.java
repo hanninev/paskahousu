@@ -60,7 +60,6 @@ public class Kayttoliittyma implements Runnable {
     private JPanel vastustajanJaPakanJaPinonTiedot() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        panel.setMinimumSize(new Dimension(0, 400));
         vastustaja = new JLabel();
         pino = new JLabel();
         pakka = new JLabel();
@@ -73,7 +72,6 @@ public class Kayttoliittyma implements Runnable {
 
     private JPanel valikko() {
 
-        JPanel panel = new JPanel(new FlowLayout());
         JButton kokeileOnnea = new JButton("Kokeile onnea pakasta");
         JButton nostaPino = new JButton("Nosta pino");
         JButton valmis = new JButton("Valmis, vastustajan vuoro");
@@ -87,10 +85,17 @@ public class Kayttoliittyma implements Runnable {
         nostaPino.addActionListener(kasittelija);
         valmis.addActionListener(kasittelija);
 
-        panel.add(kokeileOnnea);
-        panel.add(nostaPino);
-        panel.add(valmis);
-        panel.add(viestikentta);
+        JPanel painikkeet = new JPanel(new FlowLayout());
+        painikkeet.add(kokeileOnnea);
+        painikkeet.add(nostaPino);
+        painikkeet.add(valmis);
+        JPanel tekstit = new JPanel(new FlowLayout());
+        tekstit.add(viestikentta);
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(painikkeet, BorderLayout.NORTH);
+        panel.add(tekstit, BorderLayout.CENTER);
+
         return panel;
     }
 

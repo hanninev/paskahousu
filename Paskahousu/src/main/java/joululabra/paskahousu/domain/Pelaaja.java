@@ -103,4 +103,20 @@ public class Pelaaja {
         return true;
     }
 
+    /**
+     * Metodi kertoo, mikä pelaajan kädessä olevista korteista on arvoltaan
+     * suurin.
+     *
+     * @return suurin kortti
+     */
+    public Kortti suurinKortti() {
+        Kortti suurin = kasi.getKortit().get(0);
+        for (Kortti kortti : kasi.getKortit()) {
+            if (kortti.getArvo() >= suurin.getArvo()) {
+                suurin = kortti;
+            }
+        }
+        return suurin;
+    }
+
 }
