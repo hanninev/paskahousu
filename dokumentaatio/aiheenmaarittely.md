@@ -19,7 +19,7 @@ Vastustaja on ohjelmoitu siten, että se laittaa pinoon pienimmän siihen sopiva
 ![Luokkakaavio](/dokumentaatio/luokkakaavio4.png)
 
 ### Rakennekuvaus
-Peli on toteutettu siten, että pelissä voisi olla myös useampi pelaaja. Tämä mahdollistaa pelin helpomman jatkokehittämisen. Nykyinen käyttöliittymä on kuitenkin koodattu siten, että pelissä on aina vain kaksi pelaajaa - käyttäjä ja vastustajana tietokone.
+Peli on toteutettu siten, että pelissä voisi olla useampi pelaaja. Tämä mahdollistaa pelin helpomman jatkokehittämisen. Nykyinen käyttöliittymä on kuitenkin koodattu siten, että pelissä on aina vain kaksi pelaajaa - käyttäjä ja vastustajana tietokone.
 
 Peli tuntee suoraan kaikki mukana olevat Pelaajat, mutta Peli tuntee myös Siirtojenkäsittelijan kautta Vuorossa olevan Pelaajan. Vuoroon liittyy tietoja Pelaajan kyseisellä vuorolla tekemistä toiminnoista, joita käytetään tulostuksiin ja joiden avulla varmistetaan sääntöjen seuraaminen.
 
@@ -30,6 +30,6 @@ Luokat Kasi ja Pakka perivät Korttijoukon, koska ne vaativat lisätoiminnallisu
 Tekoaly käyttää Siirtojenkasittelijan metodeita korttien liikutteluun niiden pelaajien kohdalla, joille on asetettu tekoaly.
 
 ## Sekvenssikaavioita
-![Sekvenssikaavio](/dokumentaatio/sekvenssi1.png)
+![Sekvenssikaavio](/dokumentaatio/pelaaja-kokeilee-onnea.png)
 
-![Sekvenssikaavio](/dokumentaatio/sekvenssi2.png)
+![Sekvenssikaavio](/dokumentaatio/pelaaja-laittaa-kortin-pinoon-onnistuneesti.png)
