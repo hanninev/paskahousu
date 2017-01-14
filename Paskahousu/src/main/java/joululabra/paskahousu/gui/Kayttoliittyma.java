@@ -49,7 +49,8 @@ public class Kayttoliittyma implements Runnable {
 
     private void luoKomponentit(Container container) {
 
-        viestikentta = new JLabel("<html><br>Sinä aloitat. Valitse pinoon laitettavat kortit klikkaamalla niitä.<br><br>"
+        viestikentta = new JLabel("<html><br>Sinä aloitat. Valitse pinoon laitettavat kortit klikkaamalla niitä.<br>"
+                + "Halutessasi voit myös antaa aloitusvuoron vastustajalle.<br><br>"
                 + "Tärkeimmät säännöt:<br>"
                 + "* Voit laittaa vuorollasi pinoon useamman saman arvoisen kortin.<br> "
                 + "* Kuvakortit eivät sovi tyhjään pöytään.<br>"
@@ -82,7 +83,7 @@ public class Kayttoliittyma implements Runnable {
         JButton nostaPino = new JButton("Nosta pino");
         JButton valmis = new JButton("Valmis, vastustajan vuoro");
 
-        valmis.setEnabled(false);
+        valmis.setEnabled(true);
         kokeileOnnea.setEnabled(false);
         nostaPino.setEnabled(false);
 
