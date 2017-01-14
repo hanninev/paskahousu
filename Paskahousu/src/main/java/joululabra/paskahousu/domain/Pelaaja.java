@@ -78,31 +78,6 @@ public class Pelaaja {
         return kasi.ota(kortti);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 13 * hash + Objects.hashCode(this.nimi);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Pelaaja other = (Pelaaja) obj;
-        if (!Objects.equals(this.nimi, other.nimi)) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * Metodi kertoo, mikä pelaajan kädessä olevista korteista on arvoltaan
      * suurin.

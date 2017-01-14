@@ -21,16 +21,6 @@ public class KorttiTest {
     }
 
     @Test
-    public void testGetArvo() {
-        assertEquals(2, hertta2.getArvo());
-    }
-
-    @Test
-    public void testGetMaa() {
-        assertEquals(Kortti.HERTTA, hertta2.getMaa());
-    }
-
-    @Test
     public void testToString() {
         assertEquals("Hertta 2", hertta2.toString());
     }

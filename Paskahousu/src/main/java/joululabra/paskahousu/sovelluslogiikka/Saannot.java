@@ -84,7 +84,7 @@ public class Saannot {
      *
      * @return boolean
      */
-    public static boolean korttiSopii(Korttijoukko pino, Pakka pakka, Vuoro vuoro, Kortti kortti) {
+    public static boolean korttiSopii(Korttijoukko pino, Pakka pakka, Vuoro vuoro, Kortti kortti) throws Exception {
         if (vuoro.getLaitettuPinoon() == 0) {
             return vuoronEnsimmainenSiirtoOk(pakka, pino, kortti);
         } else {
@@ -92,26 +92,31 @@ public class Saannot {
         }
     }
 
-    private static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) {
-        if (kortti.getArvo() == 2) {
-            return true;
+    private static boolean vuoronEnsimmainenSiirtoOk(Pakka pakka, Korttijoukko pino, Kortti kortti) throws Exception {
+        if (pino.onTyhja()) {
+            if ((!pakka.onTyhja()) && (kortti.getArvo() > 10) && (kortti.getArvo() < 14)) {
+                throw new Exception("Pakkaa on jäljellä, joten et voi laittaa tyhjään pöytään kuvakorttia!<br>");
+            }
+        } else if ((pino.viimeisinKortti().getArvo() > kortti.getArvo()) && (kortti.getArvo() != 2)) {
+            throw new Exception("Laittamasi kortin täytyy olla arvoltaan vähintään yhtä suuri kuin pinon ylin.<br>"
+                    + "Ainoastaan kakkonen sopii minkä tahansa kortin päälle.");
+        } else if ((pino.viimeisinKortti().getArvo() == 2) && (kortti.getArvo() != 2)) {
+            throw new Exception("Kakkosen päälle käy vain kakkonen!");
         }
 
-        if (pino.onTyhja()) {
-            if (pakka.onTyhja()) {
-                return true;
-            } else if (kortti.getArvo() < 11 || kortti.getArvo() == 14) {
-                return true;
-            }
-        } else {
-            if ((pino.viimeisinKortti().getArvo() != 2) && (pino.viimeisinKortti().getArvo() <= kortti.getArvo())) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 
-    private static boolean vuoronToinenTaiUseampiSiirtoOk(Korttijoukko pino, Kortti kortti) {
-        return ((pino.viimeisinKortti().getArvo() == kortti.getArvo()) && (kortti.getArvo() != 2) && (kortti.getArvo() != 10) && (kortti.getArvo() != 14));
+    private static boolean vuoronToinenTaiUseampiSiirtoOk(Korttijoukko pino, Kortti kortti) throws Exception {
+        if ((pino.viimeisinKortti().getArvo() == 2) && (kortti.getArvo() == 2)) {
+            throw new Exception("Et voi laittaa pinoon kahta kakkosta samalla vuorolla!");
+        } else if (((pino.viimeisinKortti().getArvo() == 10) && (kortti.getArvo() == 10))
+                || ((pino.viimeisinKortti().getArvo() == 14) && (kortti.getArvo() == 14))) {
+            throw new Exception("Et voi laittaa pinoon kahta kaatokorttia samalla vuorolla!");
+        } else if (pino.viimeisinKortti().getArvo() != kortti.getArvo()) {
+            throw new Exception("Voit laittaa saman vuoron aikana pinoon vain saman arvoisia kortteja!<br>Lopeta vuoro valitsemalla valmis.");
+        }
+
+        return true;
     }
 }

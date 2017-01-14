@@ -12,7 +12,7 @@ import joululabra.paskahousu.domain.Vuoro;
  * Luokka tarjoaa useita korttien liikutteluun tarvittavia metodeja.
  */
 public class Siirtojenkasittelija {
-
+    
     private Pakka pakka;
     private Korttijoukko pino;
     private List<Vuoro> vuorot;
@@ -29,15 +29,15 @@ public class Siirtojenkasittelija {
         this.vuorot = new ArrayList<>();
         this.peli = peli;
     }
-
+    
     public Pakka getPakka() {
         return pakka;
     }
-
+    
     public Korttijoukko getPino() {
         return pino;
     }
-
+    
     public List<Vuoro> getVuorot() {
         return vuorot;
     }
@@ -76,11 +76,9 @@ public class Siirtojenkasittelija {
         if (Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
             pino.lisaa(nykyinenVuoro().getPelaaja().otaKadesta(kortti));
             nykyinenVuoro().laittoiKortinPinoon();
-        } else {
-            throw new Exception(kortti.toString() + " ei ole sopiva pinoon.");
         }
     }
-
+    
     private void taydennaKasi() throws Exception {
         while (Saannot.kadessaLiianVahanKortteja(nykyinenVuoro(), pakka)) {
             nykyinenVuoro().getPelaaja().lisaaKateen(pakka.otaEnsimmainenKortti());
@@ -113,7 +111,7 @@ public class Siirtojenkasittelija {
         }
         nykyinenVuoro().setNostiPinon(true);
     }
-
+    
     private void pinoKaatuuJosSaannotSallivat() throws Exception {
         if (Saannot.pinoKaatuu(pino, nykyinenVuoro())) {
             while (!pino.onTyhja()) {
@@ -132,7 +130,7 @@ public class Siirtojenkasittelija {
      * @throws Exception Korttia ei voida siirtää, jos siirrettävää korttia ei
      * ole lähtöjoukossa.
      */
-    public void valmis() throws Exception {
+    public void kaadaPinoJosKaatuuJaTaydennaKasi() throws Exception {
         pinoKaatuuJosSaannotSallivat();
         taydennaKasi();
     }
@@ -146,6 +144,7 @@ public class Siirtojenkasittelija {
     public void vuoronVaihtuminen() {
         if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
             peli.getSk().lisaaVuoro(peli.getSk().nykyinenVuoro().getPelaaja());
+            peli.getSk().getVuorot().get(vuorot.size() - 2).setJatkuu(false);
         } else {
             peli.asetaSeuraavaPelaajaVuoroon();
         }

@@ -111,7 +111,7 @@ public class Klikkaustenkasittelija implements ActionListener {
                 sb.append("Nostit pinon. Vuoro siirtyi vastustajalle.<br>");
                 kasittelePainikkeet();
             } else if (ae.getSource() == valmis) {
-                peli.getSk().valmis();
+                peli.getSk().kaadaPinoJosKaatuuJaTaydennaKasi();
                 if (peli.getSk().nykyinenVuoro().isKaatoiPinon()) {
                     sb.append("Kaadoit pinon. Saat uuden vuoron.<br>");
                 }
@@ -170,13 +170,12 @@ public class Klikkaustenkasittelija implements ActionListener {
         valmis.setEnabled(false);
         kokeileOnnea.setEnabled(false);
         nostaPino.setEnabled(false);
-        kortitKadessa.setEnabled(false);
     }
 
     public void vastustajaSiirtaa() throws Exception {
         Integer pinonKoko = peli.getSk().getPino().korttienMaara();
         Korttijoukko lisatyt = peli.getTekoaly().valitseToiminto();
-        peli.getSk().valmis();
+        peli.getSk().kaadaPinoJosKaatuuJaTaydennaKasi();
         if (peli.getSk().nykyinenVuoro().getLaitettuPinoon() != 0) {
             sb.append("Vastustaja laittoi pinoon " + lisatyt.toString() + " <br>");
         }

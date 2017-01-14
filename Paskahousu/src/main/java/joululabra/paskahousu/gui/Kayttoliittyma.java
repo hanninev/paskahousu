@@ -31,7 +31,11 @@ public class Kayttoliittyma implements Runnable {
         peli.lisaaPelaaja("Vastustaja");
         peli.getPelaajat().get(1).setTekoaly(true);
 
-        peli.jaaKortit();
+        try {
+            peli.jaaKortit();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
         peli.getSk().lisaaVuoro(peli.getPelaajat().get(0));
 
         frame = new JFrame("Paskahousu");
@@ -45,12 +49,14 @@ public class Kayttoliittyma implements Runnable {
 
     private void luoKomponentit(Container container) {
 
-        viestikentta = new JLabel("<html><center><br>Sinä aloitat. Valitse pinoon laitettavat kortit.<br>"
-                + "Voit laittaa vuorollasi pinoon useamman saman arvoisen kortin.<br> "
-                + "Kuvakortit eivät sovi tyhjään pöytään, mutta <br>"
-                + "kuvakortit sopivat arvoaan pienempien korttien päälle.<br>"
-                + "Kaikki kakkoset ovat kovia, ja niiden päälle ei käy mikään muu kortti.<br>"
-                + "Kymppi ja ässä ovat kaatokortteja.</center></html>");
+        viestikentta = new JLabel("<html><br>Sinä aloitat. Valitse pinoon laitettavat kortit klikkaamalla niitä.<br><br>"
+                + "Tärkeimmät säännöt:<br>"
+                + "* Voit laittaa vuorollasi pinoon useamman saman arvoisen kortin.<br> "
+                + "* Kuvakortit eivät sovi tyhjään pöytään.<br>"
+                + "* Kaikki kakkoset ovat kovia, ja niiden päälle ei käy mikään muu kortti.<br>"
+                + "* Kymppi ja ässä ovat kaatokortteja.<br><br>"
+                + "<center>Peli ei anna sinun tehdä virheellisiä siirtoja. <br>"
+                + "Jos yrität tehdä virheellisen siirron, niin peli opastaa sinua.<br></center></html>");
         container.add(this.vastustajanJaPakanJaPinonTiedot(), BorderLayout.NORTH);
         container.add(this.valikko(), BorderLayout.CENTER);
         container.add(kortitKadessa, BorderLayout.SOUTH);

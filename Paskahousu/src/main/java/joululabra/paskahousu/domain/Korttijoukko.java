@@ -46,7 +46,7 @@ public class Korttijoukko {
             kortit.remove(kortti);
             return kortti;
         }
-        throw new Exception("Korttia ei löytynyt tästä lähtöjoukosta");
+        throw new Exception("Sovelluksen sisäinen virhe: Korttia ei löytynyt tästä lähtöjoukosta");
     }
 
     /**

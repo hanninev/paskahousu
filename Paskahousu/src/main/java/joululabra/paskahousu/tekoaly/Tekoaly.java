@@ -1,6 +1,7 @@
 package joululabra.paskahousu.tekoaly;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import joululabra.paskahousu.domain.Kortti;
 import joululabra.paskahousu.domain.Korttijoukko;
@@ -36,12 +37,11 @@ public class Tekoaly {
         try {
             if (sk.getPakka().onTyhja() && !kaykoMikaanKortti()) {
                 sk.nostaPino();
-            }
-
-            if (!kaykoMikaanKortti()) {
+                return lisatyt;
+            } else if (!kaykoMikaanKortti()) {
                 sk.kokeileOnnea();
             }
-
+            
             if (kaykoMikaanKortti()) {
                 while (kaykoMikaanKortti()) {
                     return laitaKortti();
@@ -58,41 +58,47 @@ public class Tekoaly {
     }
 
     private Korttijoukko laitaKortti() throws Exception {
+
         List<Kortti> kortitKadessa = new ArrayList<>(sk.nykyinenVuoro().getPelaaja().getKasi().getKortit());
         Korttijoukko lisatyt = new Korttijoukko();
 
         for (Kortti kortti : kortitKadessa) {
             if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
-                if ((Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) && kortti.getArvo() != 2) {
-                    sk.siirraKorttiPinoon(kortti);
-                    lisatyt.lisaa(kortti);
-                }
-            }
-        }
-
-        if (lisatyt.onTyhja()) {
-            for (Kortti kortti : kortitKadessa) {
-                if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
-                    if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
+                try {
+                    if ((Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) && kortti.getArvo() != 2) {
                         sk.siirraKorttiPinoon(kortti);
                         lisatyt.lisaa(kortti);
                     }
+                } catch (Exception e) {
+
                 }
             }
         }
+
+        Kortti pienin = sk.nykyinenVuoro().getPelaaja().pieninKortti();
+        if ((lisatyt.onTyhja()) && pienin.getArvo() == 2) {
+            sk.siirraKorttiPinoon(pienin);
+            lisatyt.lisaa(pienin);
+        }
+
         return lisatyt;
     }
 
-    private boolean kaykoMikaanKortti() {
+    private boolean kaykoMikaanKortti() throws Exception {
         boolean onnistui = false;
 
-        for (Kortti kortti : sk.nykyinenVuoro().getPelaaja().getKasi().getKortit()) {
-            if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
-                if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
-                    onnistui = true;
+        if (!sk.nykyinenVuoro().getPelaaja().getKasi().onTyhja()) {
+            for (Kortti kortti : sk.nykyinenVuoro().getPelaaja().getKasi().getKortit()) {
+                try {
+                    if (Saannot.korttiSopii(sk.getPino(), sk.getPakka(), sk.nykyinenVuoro(), kortti)) {
+                        onnistui = true;
+                    }
+                } catch (Exception e) {
+
                 }
             }
         }
+
         return onnistui;
     }
 }

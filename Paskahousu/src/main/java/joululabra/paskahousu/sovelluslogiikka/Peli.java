@@ -49,14 +49,17 @@ public class Peli {
     /**
      * Metodi jakaa kaikille pelaajille viisi korttia pakasta.
      *
+     * @throws Exception Kortteja ei voida jakaa, jos pakassa ei ole ylintä
+     * korttia, eli pakka on loppunut.
+     *
      */
-    public void jaaKortit() {
+    public void jaaKortit() throws Exception {
         for (Pelaaja pelaaja : pelaajat) {
             for (int i = 0; i < 5; i++) {
                 try {
                     pelaaja.lisaaKateen(sk.getPakka().otaEnsimmainenKortti());
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    throw new Exception("Kaikille pelaajille ei voitu jakaa viittä korttia, koska pakka loppui kesken.");
                 }
             }
         }
