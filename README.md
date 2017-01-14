@@ -13,3 +13,5 @@ Paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tekoälyä vastaa
 [PIT-raportti](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/pit/index.html)
 
 [Checkstyle-raportti](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/checkstyle/checkstyle.html)
+
+[API Docs](https://htmlpreview.github.io/?https://github.com/hanninev/paskahousu/blob/master/dokumentaatio/checkstyle/apidocs/index.html)
