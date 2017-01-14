@@ -12,7 +12,7 @@ import joululabra.paskahousu.domain.Vuoro;
  * Luokka tarjoaa useita korttien liikutteluun tarvittavia metodeja.
  */
 public class Siirtojenkasittelija {
-    
+
     private Pakka pakka;
     private Korttijoukko pino;
     private List<Vuoro> vuorot;
@@ -29,15 +29,15 @@ public class Siirtojenkasittelija {
         this.vuorot = new ArrayList<>();
         this.peli = peli;
     }
-    
+
     public Pakka getPakka() {
         return pakka;
     }
-    
+
     public Korttijoukko getPino() {
         return pino;
     }
-    
+
     public List<Vuoro> getVuorot() {
         return vuorot;
     }
@@ -67,8 +67,8 @@ public class Siirtojenkasittelija {
      * Metodi siirtää halutun kortin pinoon, jos se on sääntöjen mukaan
      * mahdollista.
      *
-     * @throws Exception Jos kortti ei sovi pinoon sääntöjen mukaan, korttia ei
-     * voida lisätä pinoon.
+     * @throws Exception Jos siirto on vastoin sääntöjä, korttia ei voida lisätä
+     * pinoon.
      * @param kortti Siirrettävä kortti
      *
      */
@@ -78,7 +78,7 @@ public class Siirtojenkasittelija {
             nykyinenVuoro().laittoiKortinPinoon();
         }
     }
-    
+
     private void taydennaKasi() throws Exception {
         while (Saannot.kadessaLiianVahanKortteja(nykyinenVuoro(), pakka)) {
             nykyinenVuoro().getPelaaja().lisaaKateen(pakka.otaEnsimmainenKortti());
@@ -111,7 +111,7 @@ public class Siirtojenkasittelija {
         }
         nykyinenVuoro().setNostiPinon(true);
     }
-    
+
     private void pinoKaatuuJosSaannotSallivat() throws Exception {
         if (Saannot.pinoKaatuu(pino, nykyinenVuoro())) {
             while (!pino.onTyhja()) {

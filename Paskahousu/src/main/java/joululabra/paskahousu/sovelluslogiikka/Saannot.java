@@ -6,16 +6,15 @@ import joululabra.paskahousu.domain.Pakka;
 import joululabra.paskahousu.domain.Vuoro;
 
 /**
- * Luokka tarjoaa boolean-arvon palauttavia metodeja, jotka määrittävät pelin
- * säännöt.
+ * Luokka tarjoaa metodeja, jotka määrittävät pelin säännöt.
  */
 public class Saannot {
 
     /**
      * Metodi kertoo, saako pelaaja kokeilla onneaan pakasta.
      *
-     * Pelaaja saa kokeilla onneaan pakasta, jos ei ole saman vuoron aikana
-     * nostanut kortteja pakasta, nostanut pinoa tai laittanut kortteja pinoon.
+     * Pelaaja saa kokeilla onneaan pakasta, jos hän ei ole saman vuoron aikana
+     * kokeillut onnea pakasta, nostanut pinoa tai laittanut kortteja pinoon.
      *
      * @param vuoro Käsiteltävä vuoro
      *
@@ -32,7 +31,7 @@ public class Saannot {
      * Kädessä on liian vähän kortteja, jos pakkaa on jäljellä ja kädessä on
      * alle viisi korttia.
      *
-     * @param vuoro Käsiteltävä vuoro
+     * @param vuoro Nykyinen vuoro
      * @param pakka Nykyinen pakka
      *
      * @return boolean
@@ -47,7 +46,7 @@ public class Saannot {
      * Jos pinon ylimmän kortin arvo on 10 tai 14 (ässä), pino kaatuu.
      *
      * @param pino Nykyinen pino
-     * @param vuoro Käsiteltävä vuoro
+     * @param vuoro Nykyinen vuoro
      *
      * @return boolean
      */
@@ -78,9 +77,12 @@ public class Saannot {
      * suurempi kuin pinon ylin kortti.
      *
      * @param pino Nykyinen pino
-     * @param vuoro Käsiteltävä vuoro
+     * @param vuoro Nykyinen vuoro
      * @param kortti Kokeiltava kortti
      * @param pakka Nykyinen pakka
+     *
+     * @throws Exception Jos siirto on vastoin jotain sääntöä, niin tästä heitetään
+     * poikkeus eikä siirtoa voida suorittaa.
      *
      * @return boolean
      */

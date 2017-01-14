@@ -42,6 +42,8 @@ public class KorttiTest {
     @Test
     public void testEqualsJaHashCode() {
         assertTrue(new Kortti(Kortti.HERTTA, 2).equals(new Kortti(Kortti.HERTTA, 2)));
+        assertFalse(new Kortti(Kortti.PATA, 2).equals(new Kortti(Kortti.HERTTA, 2)));
+        assertFalse(new Kortti(Kortti.HERTTA, 3).equals(new Kortti(Kortti.HERTTA, 2)));
     }
 
 }

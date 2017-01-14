@@ -16,7 +16,7 @@ public class Kortti implements Comparable<Kortti> {
     private int maa;
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Kortti.
+     * Konstruktori tekee uuden olioilmentymän luokasta Kortti.
      * @param arvo Kortin arvo
      * @param maa Kortin maa
      */

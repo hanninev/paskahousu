@@ -1,6 +1,7 @@
 package joululabra.paskahousu.tekoaly;
 
 import joululabra.paskahousu.domain.Kortti;
+import joululabra.paskahousu.domain.Korttijoukko;
 import joululabra.paskahousu.domain.Pelaaja;
 import joululabra.paskahousu.sovelluslogiikka.Peli;
 import org.junit.Test;
@@ -69,5 +70,25 @@ public class TekoalyTest {
         peli.getSk().lisaaVuoro(tekoalyaKayttava);
         peli.getTekoaly().valitseToiminto();
         assertEquals(tekoalyaKayttava.getKasi().korttienMaara(), 6);
+    }
+
+    @Test
+    public void testlaitetaanKakkonenVastaKunMikaanMuuEiKay() throws Exception {
+        tekoalyaKayttava.lisaaKateen(peli.getSk().getPakka().ota(new Kortti(Kortti.RISTI, 2)));
+
+        peli.getSk().lisaaVuoro(pelaaja);
+        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.HERTTA, 6));
+        assertEquals(peli.getSk().getPino().korttienMaara(), 1);
+        peli.getSk().lisaaVuoro(tekoalyaKayttava);
+        Korttijoukko laitetut1 = peli.getTekoaly().valitseToiminto();
+        assertTrue(laitetut1.getKortit().contains(new Kortti((Kortti.HERTTA), 7)));
+        assertTrue(laitetut1.getKortit().contains(new Kortti((Kortti.RISTI), 7)));
+
+        peli.getSk().lisaaVuoro(pelaaja);
+        peli.getSk().siirraKorttiPinoon(new Kortti(Kortti.RUUTU, 14));
+        peli.getSk().lisaaVuoro(tekoalyaKayttava);
+        Korttijoukko laitetut2 = peli.getTekoaly().valitseToiminto();
+        assertTrue(laitetut2.getKortit().contains(new Kortti((Kortti.RISTI), 2)));
+        assertEquals(peli.getSk().getPino().viimeisinKortti(), new Kortti((Kortti.RISTI), 2));
     }
 }

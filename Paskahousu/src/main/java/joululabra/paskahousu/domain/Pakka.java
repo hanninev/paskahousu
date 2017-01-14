@@ -8,7 +8,7 @@ import java.util.Collections;
 public class Pakka extends Korttijoukko {
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Pakka.
+     * Konstruktori tekee uuden olioilmentymän luokasta Pakka.
      *
      */
     public Pakka() {

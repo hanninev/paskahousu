@@ -33,11 +33,10 @@ public class Tekoaly {
      * vastustajan kädessä.
      */
     public Korttijoukko valitseToiminto() throws Exception {
-        Korttijoukko lisatyt = new Korttijoukko();
         try {
             if (sk.getPakka().onTyhja() && !kaykoMikaanKortti()) {
                 sk.nostaPino();
-                return lisatyt;
+                return new Korttijoukko();
             } else if (!kaykoMikaanKortti()) {
                 sk.kokeileOnnea();
             }
@@ -54,7 +53,7 @@ public class Tekoaly {
             System.out.println(e);
         }
 
-        return lisatyt;
+        return new Korttijoukko();
     }
 
     private Korttijoukko laitaKortti() throws Exception {

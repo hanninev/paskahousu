@@ -12,7 +12,7 @@ public class Pelaaja {
     private boolean tekoaly;
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Pelaaja.
+     * Konstruktori tekee uuden olioilmentymän luokasta Pelaaja.
      *
      * @param nimi Pelaajan nimi
      *
@@ -56,7 +56,7 @@ public class Pelaaja {
     }
 
     /**
-     * Metodilla voidaan lisätä kyseisen käyttäjän käteen haluttu kortti.
+     * Metodilla voidaan lisätä pelaajan käteen haluttu kortti.
      *
      * @param kortti Käteen lisättävä kortti
      */
@@ -65,7 +65,7 @@ public class Pelaaja {
     }
 
     /**
-     * Metodilla voidaan ottaa kyseisen pelaajan kädestä haluttu kortti.
+     * Metodilla voidaan ottaa pelaajan kädestä haluttu kortti.
      *
      * @param kortti Kädestä otettava kortti
      *
@@ -82,7 +82,7 @@ public class Pelaaja {
      * Metodi kertoo, mikä pelaajan kädessä olevista korteista on arvoltaan
      * suurin.
      *
-     * @return suurin kortti
+     * @return Suurin kortti
      */
     public Kortti suurinKortti() {
         Kortti suurin = kasi.getKortit().get(0);

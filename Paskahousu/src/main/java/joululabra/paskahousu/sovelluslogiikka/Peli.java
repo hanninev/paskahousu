@@ -15,7 +15,7 @@ public class Peli {
     private List<Pelaaja> pelaajat;
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Peli.
+     * Konstruktori tekee uuden olioilmentymän luokasta Peli.
      *
      */
     public Peli() {

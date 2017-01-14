@@ -11,7 +11,7 @@ public class Korttijoukko {
     protected List<Kortti> kortit;
 
     /**
-     * Metodi tekee uuden olioilmentymän luokasta Korttijoukko.
+     * Konstruktori tekee uuden olioilmentymän luokasta Korttijoukko.
      *
      */
     public Korttijoukko() {
@@ -35,7 +35,7 @@ public class Korttijoukko {
     /**
      * Metodi ottaa korttijoukosta halutun kortin.
      *
-     * @throws Exception Jos haluttua korttia ei ole korttijoukossa
+     * @throws Exception Haluttua korttia ei ole korttijoukossa
      *
      * @param kortti Otettava kortti
      *
