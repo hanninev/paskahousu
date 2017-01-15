@@ -16,3 +16,4 @@ Päivä | Tunnit | Kuvaus
 08.01.2017 | 4h | Javadocien ja sekvenssikaavioiden tekoa sekä luokkakaavion päivitys
 11.01.2017 | 5h | Bugien korjailua ja ohjelmointia.
 14.01.2017 | 6h | Viimeistelyä.
+15.01.2017 | 2h | Muutama bugi korjattu.
