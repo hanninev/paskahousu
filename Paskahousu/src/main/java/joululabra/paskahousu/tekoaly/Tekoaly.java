@@ -40,7 +40,7 @@ public class Tekoaly {
             } else if (!kaykoMikaanKortti()) {
                 sk.kokeileOnnea();
             }
-            
+
             if (kaykoMikaanKortti()) {
                 while (kaykoMikaanKortti()) {
                     return laitaKortti();
@@ -74,10 +74,12 @@ public class Tekoaly {
             }
         }
 
-        Kortti pienin = sk.nykyinenVuoro().getPelaaja().pieninKortti();
-        if ((lisatyt.onTyhja()) && pienin.getArvo() == 2) {
-            sk.siirraKorttiPinoon(pienin);
-            lisatyt.lisaa(pienin);
+        if (lisatyt.onTyhja()) {
+            Kortti pienin = sk.nykyinenVuoro().getPelaaja().pieninKortti();
+            if (pienin.getArvo() == 2) {
+                sk.siirraKorttiPinoon(pienin);
+                lisatyt.lisaa(pienin);
+            }
         }
 
         return lisatyt;

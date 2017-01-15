@@ -73,7 +73,7 @@ public class Siirtojenkasittelija {
      *
      */
     public void siirraKorttiPinoon(Kortti kortti) throws Exception {
-        if (Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
+        if (peli.peliJatkuu() && Saannot.korttiSopii(pino, pakka, nykyinenVuoro(), kortti)) {
             pino.lisaa(nykyinenVuoro().getPelaaja().otaKadesta(kortti));
             nykyinenVuoro().laittoiKortinPinoon();
         }
