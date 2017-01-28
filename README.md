@@ -2,6 +2,8 @@
 
 Paskahousua mukaileva korttipeli, jossa käyttäjä voi pelata tietokonetta vastaan.
 
+Ohjelmoinnin peruskurssien harjoitustyö, Helsingin yliopisto 2017.
+
 ## Dokumentaatio
 
 [Aiheen kuvaus ja rakenne](dokumentaatio/aiheenmaarittely.md)
